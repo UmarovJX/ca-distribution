@@ -3,6 +3,7 @@ import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const instance = axios.create({
+  mode: 'no-cors',
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     Accept: 'application/json',
@@ -17,6 +18,11 @@ instance.interceptors.request.use(
     config.headers.Authorization = settings.token.value
     config.headers['Accept-Language'] = settings.lang.value
     config.headers['Access-Control-Allow-Origin'] = '*'
+    config.headers['Access-Control-Allow-Credentials'] = 'true'
+    config.headers['Access-Control-Allow-Methods'] = 'GET,HEAD,OPTIONS,POST,PUT'
+    config.headers['Access-Control-Allow-Headers'] =
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+
     console.log(config.headers)
     return config
   },
