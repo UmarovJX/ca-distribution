@@ -17,11 +17,6 @@ instance.interceptors.request.use(
 
     config.headers.Authorization = settings.token.value
     config.headers['Accept-Language'] = settings.lang.value
-    config.headers['Access-Control-Allow-Origin'] = '*'
-    config.headers['Access-Control-Allow-Credentials'] = 'true'
-    config.headers['Access-Control-Allow-Methods'] = 'GET,HEAD,OPTIONS,POST,PUT'
-    config.headers['Access-Control-Allow-Headers'] =
-      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
 
     console.log(config.headers)
     return config
