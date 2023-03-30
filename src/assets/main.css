@@ -1,0 +1,72 @@
+@import './base.css';
+@import './typo.css';
+
+#app {
+  margin: 0 auto;
+  height: 100vh;
+  width: 100vw;
+  font-weight: normal;
+}
+body {
+  display: flex;
+  place-items: center;
+}
+.container {
+  margin: 0 20px;
+}
+.base-input:active,
+.base-input:hover,
+.base-input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color);
+}
+.base-input {
+  width: 100%;
+  font-size: 16px;
+  padding: 20px;
+  border: 1px solid var(--color-outline);
+  border-radius: 20px;
+}
+.base-input::placeholder {
+  font-size: 16px;
+  color: var(--placeholder-color);
+}
+
+.title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: -0.165px;
+}
+
+.section-header {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.165px;
+}
+
+.section-secondary {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: right;
+  letter-spacing: -0.165px;
+  color: #fc8d2d;
+}
+
+.flex {
+  display: flex;
+}
+
+button {
+  width: 350px;
+  font-size: 16px;
+  padding: 20px;
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  border: none;
+}

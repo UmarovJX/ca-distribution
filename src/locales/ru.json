@@ -1,0 +1,29 @@
+{
+  "register": "Регистрация",
+  "create_new_account": "Создайте новый аккаунт",
+  "placeholders": {
+    "username": "Имя пользователя",
+    "email": "Электронная почта",
+    "password": "Пароль"
+  },
+  "haveAccount": "Уже есть аккаунт?",
+  "noAccount": "Нет аккаунта?",
+  "signIn": "Войти",
+  "enterData": "Введите данные",
+  "hiAgain": "С возвращением!",
+  "searchCourse": "Искать курсы",
+  "letsStart": "Давайте начнем обучение",
+  "balls": "Баллы",
+  "ball": "Балл",
+  "allCourses": "Все курсы",
+  "myCourses": "Мои курсы",
+  "activeCourses": "Активные курсы",
+  "viewAll": "Смотреть все",
+  "scanner": "Сканер",
+  "study": "Обучение",
+  "rating": "Рейтинг",
+  "finishedLessons": "Пройдено уроков { finished } из { all}",
+  "finishedCourses": "Пройденные курсы",
+  "lessonNoAccess": "Данный урок будет доступен после просмотра предыдущего",
+  "startTest": "Начать тест"
+}
