@@ -17,7 +17,7 @@ instance.interceptors.request.use(
     config.headers.Authorization = settings.token.value
     config.headers['Accept-Language'] = settings.lang.value
     config.headers['Access-Control-Allow-Origin'] = '*'
-
+    console.log(config.headers)
     return config
   },
   function (error) {
