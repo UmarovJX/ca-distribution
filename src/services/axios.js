@@ -15,7 +15,7 @@ instance.interceptors.request.use(
   function (config) {
     const settings = useSettingsStore()
 
-    config.headers.Authorization = settings.token.value
+    //config.headers.Authorization = settings.token.value
     config.headers['Accept-Language'] = settings.lang.value
 
     console.log(config.headers)
