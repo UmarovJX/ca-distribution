@@ -3,6 +3,7 @@ import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const instance = axios.create({
+  mode:'same-origin',
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     Accept: 'application/json',
