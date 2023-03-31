@@ -31,11 +31,13 @@ const password = ref('')
       <auth-header :title="t('hiAgain')" :hint="t('enterData')" />
       <form @submit.prevent="handleForm">
         <BaseInput
+          id="name"
           v-model="username"
           :type="'text'"
           :placeholder="t('placeholders.username')"
         ></BaseInput>
         <BaseInput
+          id="password"
           v-model="password"
           :type="'password'"
           :placeholder="t('placeholders.password')"
