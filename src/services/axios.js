@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
-const router = useRouter()
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
@@ -15,9 +14,9 @@ instance.interceptors.request.use(
     const settings = useSettingsStore()
 
     //config.headers.Authorization = settings.token.value
-    config.headers['Accept-Language'] = settings.lang.value
+    config.headers['Accept-Language'] = settings.lang
+    config.headers['Authorization'] = settings.token
 
-    console.log(config.headers)
     return config
   },
   function (error) {
@@ -31,8 +30,8 @@ instance.interceptors.response.use(
   },
   function (response) {
     const settings = useSettingsStore()
-    if (response.status === 401) settings.set('token', '')
-    router.push({ name: 'signin' })
+    if (response.status === 401) settings.setToken('')
+    useRouter().push({ name: 'signin' })
   }
 )
 

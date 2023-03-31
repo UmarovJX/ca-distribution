@@ -1,60 +1,72 @@
 <script setup>
-import img1 from '../assets/images/1.jpeg'
 import AppFooter from '../components/AppFooter.vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
 import LessonPanel from '../components/LessonPanel.vue'
+import { useSettingsStore } from '../stores/settings'
+import { useCourses } from '../composables/courses'
+import { useRoute } from 'vue-router'
+const settings = useSettingsStore()
+const route = useRoute()
+
+const { course, getCource } = useCourses()
+getCource(route.params.id)
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
+const course_duration = computed(() => {
+  const hours = Math.floor(course.value.duration_in_minutes / 60)
+  const minutes = course.value.duration_in_minutes % 60
 
-const course = ref({
-  img: img1,
-  title: 'Продажи',
-  duration: '2 ч. 30 мин.',
-  description: 'Основы продаж в B2B сегменте. Анализ и контроль рынка'
+  return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} `+'min'
 })
 </script>
 <template>
-  <div class="container child_mt_20">
-    <img :src="course.img" :alt="course.title" class="course_banner" />
-    <h1 class="typo700_24">{{ course.title }}</h1>
-    <div class="hint_text">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-          fill="#FC8D2D"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z"
-          fill="white"
-        />
-      </svg>
-      <span class="typo600_12">{{ course.duration }}</span>
+  <div>
+    <div class="container child_mt_20" v-if="course">
+      <img
+        :src="course.image.widen_500.webp"
+        :alt="course.name[settings.lang]"
+        class="course_banner"
+      />
+      <h1 class="typo700_24">{{ course.name[settings.lang] }}</h1>
+      <div class="hint_text">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+            fill="#FC8D2D"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z"
+            fill="white"
+          />
+        </svg>
+        <span class="typo600_12">{{ course_duration }}</span>
+      </div>
+      <div class="typo400_14 course_description">{{ course.description[settings.lang] }}</div>
+      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
+      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
+      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
+      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="50"></LessonPanel>
+      <LessonPanel :index="1" :title="'Продажи'"></LessonPanel>
+      <button>{{ t('startTest') }}</button>
     </div>
-    <div class="typo400_14 course_description">{{ course.description }}</div>
-    <LessonPanel :index="1" :title="'Продажи'" :duration="'25 min'" :progress="100"></LessonPanel>
-    <LessonPanel :index="1" :title="'Продажи'" :duration="'25 min'" :progress="100"></LessonPanel>
-    <LessonPanel :index="1" :title="'Продажи'" :duration="'25 min'" :progress="100"></LessonPanel>
-    <LessonPanel :index="1" :title="'Продажи'" :duration="'25 min'" :progress="50"></LessonPanel>
-    <LessonPanel :index="1" :title="'Продажи'"></LessonPanel>
-    <button>{{ t('startTest') }}</button>
+    <AppFooter></AppFooter>
   </div>
-  <AppFooter></AppFooter>
 </template>
 
 <style>
-.child_mt_20>*:not(:first-child) {
-margin-top: 20px;
+.child_mt_20 > *:not(:first-child) {
+  margin-top: 20px;
 }
 .mb-20 {
   margin-bottom: 20px;

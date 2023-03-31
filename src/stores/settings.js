@@ -5,15 +5,16 @@ import ls from './localStorageHelper'
 export const useSettingsStore = defineStore('settings', () => {
   const lang = ref(ls.get('lang') || 'ru')
   const token = ref(ls.get('token') || '')
+  const user = ref(ls.getObj('user') || {})
 
-  //const profile =
+  function setToken(value) {
+    token.value = value
+    ls.set('token', value)
+  }
 
-  let settings = { lang, token }
-  settings.set = function (key, value) {
-    if (this[key]) {
-      this[key].value = value
-      ls.set(key, value)
-    }
+  function setUser(data) {
+    user.value = data
+    ls.saveObj('user', data)
   }
 
   ls.saveAll([
@@ -21,5 +22,5 @@ export const useSettingsStore = defineStore('settings', () => {
     ['token', token.value]
   ])
 
-  return settings
+  return { lang, token, user, setToken, setUser }
 })

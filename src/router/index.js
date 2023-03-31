@@ -30,7 +30,7 @@ const router = createRouter({
     },
     {
       path: '/course/:id',
-      name: 'course/:id',
+      name: 'course',
       component: CourseView
     },
 

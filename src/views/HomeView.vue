@@ -3,33 +3,34 @@ import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import BaseInput from '../components/BaseInput.vue'
 import CourseCard from '../components/CourseCard.vue'
-import img1 from '../assets/images/1.jpeg'
-import img2 from '../assets/images/2.jpeg'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useSettingsStore } from '../stores/settings'
+import { useCourses } from '../composables/courses'
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
 const search = ref('')
-const courses = ref([
-  { img: img1, title: 'Продажи', description: 'Основы продаж в B2B сегменте' },
-  { img: img2, title: 'Управление', description: 'Основы контроля...' }
-])
+
+const { allCourses, myCourses, getAll, getMyCourses } = useCourses()
+getAll()
+getMyCourses()
+const settings = useSettingsStore()
 </script>
 
 <template>
-  <main>
+  <div>
     <app-header>
       <div class="header-title">
         <div>
-          <h1 class="title">Anton_manager</h1>
+          <h1 class="title">{{ settings.user.full_name }}</h1>
           <p class="secondary typo400_14">{{ t('letsStart') }}</p>
         </div>
         <div>
-          <div class="secondary typo400_14 right">{{ t('balls') }}</div>
+          <div class="secondary typo400_14">{{ t('balls') }}</div>
 
-          <div class="balls">4</div>
+          <div class="balls">{{ settings.user.balance }}</div>
         </div>
       </div>
       <div class="inputdiv">
@@ -47,37 +48,43 @@ const courses = ref([
         </base-input>
       </div>
     </app-header>
+    <main v-if="allCourses && myCourses">
+      <div class="part">
+        <h2 class="section-header">{{ t('allCourses') }}</h2>
+        <span class="section-secondary">{{ t('viewAll') }}</span>
+      </div>
+      <div class="scroll-horizontal">
+        <template v-if="allCourses">
+          <course-card
+            v-for="course in allCourses"
+            :id="course.id"
+            :key="course.id"
+            :img="course.image.widen_500.webp"
+            :title="course.name[settings.lang]"
+            :description="course.description[settings.lang]"
+          ></course-card>
+        </template>
+      </div>
 
-    <div class="part">
-      <h2 class="section-header">{{ t('allCourses') }}</h2>
-      <span class="section-secondary">{{ t('viewAll') }}</span>
-    </div>
-    <div class="scroll-horizontal">
-      <course-card
-        v-for="course in courses"
-        :key="course.title"
-        :img="course.img"
-        :title="course.title"
-        :description="course.description"
-      ></course-card>
-    </div>
-
-    <div class="part">
-      <h2 class="section-header">{{ t('myCourses') }}</h2>
-      <span class="section-secondary">{{ t('viewAll') }}</span>
-    </div>
-    <div class="scroll-horizontal">
-      <course-card
-        v-for="course in courses"
-        :key="course.title"
-        :img="course.img"
-        :title="course.title"
-        :description="course.description"
-        :progress="25"
-      ></course-card>
-    </div>
-  </main>
-  <AppFooter></AppFooter>
+      <div class="part">
+        <h2 class="section-header">{{ t('myCourses') }}</h2>
+        <span class="section-secondary">{{ t('viewAll') }}</span>
+      </div>
+      <div class="scroll-horizontal">
+        <template v-if="myCourses">
+          <course-card
+            v-for="course in myCourses"
+            :id="course.id"
+            :key="course.id"
+            :img="course.image.widen_500.webp"
+            :title="course.name[settings.lang]"
+            :description="course.description[settings.lang]"
+          ></course-card>
+        </template>
+      </div>
+    </main>
+    <AppFooter></AppFooter>
+  </div>
 </template>
 
 <style>
@@ -99,9 +106,7 @@ const courses = ref([
   padding: 40px 20px 20px 20px;
   align-items: center;
 }
-.part .right {
-  text-align: right;
-}
+
 .inputdiv {
   margin-bottom: 20px;
 }

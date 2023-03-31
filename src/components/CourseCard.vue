@@ -1,5 +1,8 @@
 <script setup>
-defineProps({
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const props = defineProps({
+  id: { type: Number },
   vertical: { type: Boolean, default: false },
   img: {
     type: String
@@ -15,6 +18,10 @@ defineProps({
     default: 0
   }
 })
+
+function handleClick() {
+  router.push({ name: 'course', params: { id: props.id } })
+}
 </script>
 
 <template>
@@ -25,7 +32,7 @@ defineProps({
         image_container__horizontal: !vertical
       }"
     >
-      <img :src="img" :alt="title" />
+      <img :src="img" :alt="title" @click="handleClick" />
       <div class="course-progress" v-if="progress">
         <div></div>
         <div class="card-svg">
@@ -100,6 +107,7 @@ defineProps({
   width: 250px;
   aspect-ratio: auto;
   border-radius: 30px;
+  min-height: 145px;
 }
 
 .image_container__vertical img {

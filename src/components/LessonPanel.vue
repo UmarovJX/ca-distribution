@@ -1,5 +1,4 @@
 <script setup>
-import { number } from '@intlify/core-base'
 import ProgressBar from '../components/ProgressBar.vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n({
@@ -8,7 +7,7 @@ const { t } = useI18n({
 })
 defineProps({
   index: {
-    type: number,
+    type: Number,
     required: true
   },
   title: {
@@ -16,8 +15,7 @@ defineProps({
     required: true
   },
   duration: {
-    type: Number,
-    required: true
+    type: Number
   },
   progress: {
     type: Number,
@@ -27,7 +25,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="course_panel">
+  <div class="panel">
     <div class="typo400_24 mr-20">{{ '0' + index }}</div>
     <div class="lesson_details">
       <div class="typo700_14 mb-7">{{ title }}</div>
@@ -97,14 +95,6 @@ defineProps({
   height: 52px;
   align-items: center;
   justify-content: center;
-}
-.course_panel {
-  background-color: var(--secondary-color);
-  border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 .lesson_details {
   align-items: center;
