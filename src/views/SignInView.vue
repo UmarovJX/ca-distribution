@@ -86,7 +86,6 @@ form *:not(:first-child) {
 }
 
 button {
-  width: 350px;
   font-size: 16px;
   padding: 20px;
   border-radius: 20px;

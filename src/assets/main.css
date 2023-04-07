@@ -111,6 +111,13 @@ button:disabled {
     border: 1px solid var(--primary-color);
   }
 }
+.dark .panel {
+  border: 1px solid var(--color-outline);
+}
+.dark .panel:hover {
+  border: 1px solid var(--primary-color);
+}
+
 .youtube_iframe {
   width: 100%;
   height: auto;

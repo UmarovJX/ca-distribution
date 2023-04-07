@@ -94,6 +94,9 @@ const handleClick = () => {
     stroke: white;
   }
 }
+.dark .checkbox_unchecked path {
+  stroke: white;
+}
 .check-box {
   align-items: center;
   border: 1px solid transparent;

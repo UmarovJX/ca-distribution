@@ -14,7 +14,7 @@ const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
-authService.getUser();
+authService.getUser()
 const search = ref('')
 
 const { allCourses, myCourses, getAll, getMyCourses } = useCourses()
@@ -25,9 +25,9 @@ function seeAllMy() {
   router.push({ name: 'mycourses' })
 }
 
-function clearSystem(){
-  settings.clear();
-  router.push({name: 'home'})
+function clearSystem() {
+  settings.clear()
+  setTimeout(() => router.push({ name: 'home' }), 0)
 }
 </script>
 
@@ -120,7 +120,6 @@ function clearSystem(){
   align-items: center;
   margin-bottom: 20px;
 }
-
 
 .header-title h1 {
   color: white;
