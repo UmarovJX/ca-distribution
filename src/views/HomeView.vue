@@ -24,6 +24,11 @@ const settings = useSettingsStore()
 function seeAllMy() {
   router.push({ name: 'mycourses' })
 }
+
+function clearSystem(){
+  settings.clear();
+  router.push({name: 'home'})
+}
 </script>
 
 <template>
@@ -37,7 +42,7 @@ function seeAllMy() {
         <div>
           <div class="secondary typo400_14">{{ t('balls') }}</div>
 
-          <div class="balls">{{ settings.user.balance }}</div>
+          <div class="balls" @click="clearSystem">{{ settings.user.balance }}</div>
         </div>
       </div>
       <div class="inputdiv">
