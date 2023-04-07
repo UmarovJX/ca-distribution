@@ -6,19 +6,17 @@ const route = useRoute()
 const router = useRouter()
 function setBgColor() {
   if (tg.colorScheme === 'dark') {
-    alert('dark')
-    alert(tg.headerColor)
-    tg.headerColor = 'var(--primary-color)'
-  } else {
-    alert('light')
-    alert(tg.headerColor)
 
+    alert('dark')
+    tg.headerColor = 'var(--tg-theme-bg-color)'
+  } else {
     //document.getElementById('app').style.backgroundColor = 'var(--tg-theme-bg-color)'
-    tg.headerColor = 'var(--primary-color)'
+    tg.headerColor = 'var(--tg-theme-bg-color)'
   }
 }
 
 function setBackBtn() {
+  tg.showScanQrPopup({text:'Scan QR1'})
   if (route.name === 'home') {
     tg.BackButton.isVisible = false
   } else {
