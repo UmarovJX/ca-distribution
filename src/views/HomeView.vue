@@ -27,7 +27,7 @@ function seeAllMy() {
 
 function clearSystem() {
   settings.clear()
-  setTimeout(() => router.push({ name: 'home' }), 0)
+  setTimeout(() => router.push({ name: 'signin' }), 0)
 }
 </script>
 

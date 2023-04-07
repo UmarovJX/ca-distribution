@@ -99,7 +99,7 @@ function handle(newId, oldId) {
 function submitTest() {
   courseService.submitTest(answers).then(({ meta }) => {
     testResult.value = meta
-    testState.value = 'result'
+    setTimeout(() => (testState.value = 'result'))
   })
 }
 
