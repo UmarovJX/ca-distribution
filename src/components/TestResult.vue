@@ -55,7 +55,7 @@ const props = defineProps({
 })
 
 const colorClass = computed(() => (props.result.is_passed ? 'green-text' : 'red-text'))
-alert(JSON.stringify(props.result.value))
+alert(JSON.stringify(props.result))
 </script>
 
 <style scoped>
