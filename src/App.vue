@@ -6,6 +6,7 @@ const route = useRoute()
 const router = useRouter()
 function setBgColor() {
   if (tg.colorScheme === 'dark') {
+    document.body.classList.add('dark')
 
     tg.headerColor = 'var(--tg-theme-bg-color)'
   } else {
