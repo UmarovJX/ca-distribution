@@ -14,7 +14,7 @@ export default defineConfig({
     vue(),
     VueI18nPlugin({
       // you need to set i18n resource including paths
-      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/locales')
+      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/locales/**')
     })
   ],
   resolve: {
