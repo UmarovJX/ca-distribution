@@ -1,9 +1,12 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { computed } from 'vue'
 const router = useRouter()
+const route = useRoute()
 function goTo(name) {
   router.push({ name })
 }
+const pathStart = computed(() => route.fullPath.split('/')[1])
 </script>
 
 <template>
@@ -11,6 +14,7 @@ function goTo(name) {
   <footer class="footer">
     <div @click="goTo('home')">
       <svg
+        :class="pathStart === 'course' ? 'active' : ''"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -104,7 +108,8 @@ function goTo(name) {
   bottom: 0;
   width: 100%;
   height: 80px;
-  background-color: white;
+  /* background-color: var(--secondary-bg-color); */
+  background-color: var(--footer-bg-color);
   color: white;
   text-align: center;
   -webkit-border-top-left-radius: 20px;
@@ -126,5 +131,11 @@ function goTo(name) {
 }
 .footer div:not(:last-child) {
   margin-right: 60px;
+}
+footer path {
+  stroke: var(--no-active-white);
+}
+footer .active path {
+  stroke: none;
 }
 </style>

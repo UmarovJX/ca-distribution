@@ -73,7 +73,7 @@ const course_duration = computed(() => {
         </svg>
         <span class="typo600_12">{{ course_duration }}</span>
       </div>
-      <div class="typo400_14 course_description">{{ course.description[settings.lang] }}</div>
+      <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
       <LessonList :lessons="lessons"></LessonList>
       <button v-if="lessons[lessons.length-1]?.is_completed">{{ t('startTest') }}</button>
     </div>

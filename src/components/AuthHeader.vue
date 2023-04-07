@@ -1,6 +1,5 @@
 <script setup>
-const props = defineProps(['title', 'hint']);
-
+const props = defineProps(['title', 'hint'])
 </script>
 
 <template>
@@ -13,9 +12,10 @@ const props = defineProps(['title', 'hint']);
 </template>
 
 <style scoped>
-.auth_title{
+.auth_title {
   text-align: center;
   margin-bottom: 10px;
+  color: var(--text-color-main);
 }
 
 .auth_header_hint {

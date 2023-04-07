@@ -20,7 +20,7 @@ const progress = computed(
 </script>
 
 <template>
-  <div class="course_panel">
+  <div class="panel">
     <div>
       <h2 class="section-header mb-5">{{ course.name[settings.lang] }}</h2>
       <div class="flex">
@@ -60,7 +60,7 @@ const progress = computed(
   background: linear-gradient(180deg, #8d7cfc 0%, #7061e1 100%);
   border-radius: 10px;
 }
-.course_panel {
+.panel {
   background-color: var(--secondary-color);
   border-radius: 20px;
   padding: 20px;
@@ -68,13 +68,13 @@ const progress = computed(
   justify-content: space-between;
   align-items: center;
 }
-.course_panel:not(:first-child) {
+.panel:not(:first-child) {
   margin-top: 20px;
 }
-.course_panel .flex {
+.panel .flex {
   align-items: center;
 }
-.course_panel .flex svg {
+.panel .flex svg {
   margin-right: 6px;
 }
 

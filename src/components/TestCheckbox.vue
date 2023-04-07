@@ -67,6 +67,7 @@ const handleClick = () => {
       </template>
       <template v-if="!props.checked">
         <svg
+          class="checkbox_unchecked"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -88,6 +89,11 @@ const handleClick = () => {
 </template>
 
 <style scoped>
+@media (prefers-color-scheme: dark) {
+  .checkbox_unchecked path {
+    stroke: white;
+  }
+}
 .check-box {
   align-items: center;
   border: 1px solid transparent;

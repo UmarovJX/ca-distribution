@@ -16,7 +16,6 @@ function setBgColor() {
 }
 
 function setBackBtn() {
-  tg.showScanQrPopup({text:'Scan QR1'})
   if (route.name === 'home') {
     tg.BackButton.isVisible = false
   } else {

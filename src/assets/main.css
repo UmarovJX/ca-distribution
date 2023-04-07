@@ -32,6 +32,10 @@ body {
   color: var(--placeholder-color);
 }
 
+.auth input {
+  background-color: var(--auth-input-bg);
+}
+
 .title {
   font-style: normal;
   font-weight: 700;
@@ -69,21 +73,43 @@ body {
 button {
   width: 100%;
   font-size: 16px;
+  font-weight: 600;
   padding: 20px;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-bg-color);
   border-radius: 20px;
-  border: none;
+  border: 1px solid var(--violet);
+  color: var(--violet);
+}
+input:focus + .input_icon,
+input:hover + .input_icon {
+  stroke: var(--violet);
+}
+.input_icon {
+  stroke: #42c6a5;
+}
+button:hover {
+  background-color: var(--violet);
+  color: white;
 }
 button:disabled {
   background-color: grey;
 }
 .panel {
-  background-color: var(--secondary-color);
+  background-color: var(--panel-bg-color);
   border-radius: 20px;
-  padding: 15px;
+  padding: 15px 15px 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .panel {
+    border: 1px solid var(--color-outline);
+  }
+  .panel:hover {
+    border: 1px solid var(--primary-color);
+  }
 }
 .youtube_iframe {
   width: 100%;
@@ -129,4 +155,10 @@ button:disabled {
 }
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.secondary {
+  font-style: normal;
+
+  color: var(--secondary-text-color);
 }

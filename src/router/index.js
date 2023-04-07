@@ -10,8 +10,9 @@ import TestView from '../views/TestView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
     {
-      path: '/',
+      path: '/course',
       name: 'home',
       component: HomeView
     },
@@ -56,6 +57,7 @@ router.beforeEach((to) => {
   const settings = useSettingsStore()
 
   if (!['signin', 'register'].includes(to.name) && settings.token === '') return { name: 'signin' }
+  if (to.fullPath==='/') return {name: 'home'}
 })
 
 export default router

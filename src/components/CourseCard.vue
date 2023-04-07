@@ -72,7 +72,7 @@ function handleClick() {
     </div>
 
     <h2 class="card-title">{{ course.name[settings.lang] }}</h2>
-    <p class="card-description">{{ desc_string }}</p>
+    <p class="secondary">{{ desc_string }}</p>
   </div>
 </template>
 
@@ -139,7 +139,7 @@ function handleClick() {
   letter-spacing: -0.165px;
   padding-bottom: 10px;
 }
-.card-description {
+.course-card p {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
@@ -147,7 +147,7 @@ function handleClick() {
   line-height: 15px;
   margin-left: 20px;
 }
-.card-description::before {
+.course-card p::before {
   position: absolute;
   content: '';
   width: 10px;

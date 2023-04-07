@@ -1,6 +1,7 @@
 <template>
   <div>
     <input
+      ref="inputRef"
       class="input"
       :style="{ paddingLeft: left ? '57px' : '20px' }"
       v-bind="$attrs"
@@ -9,13 +10,25 @@
       :placeholder="placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <i :class="left ? 'left' : 'right'" @click="$emit('iconClicked')">
+    <i :class="left ? 'left' : 'right'" class="input_icon" @click="handleIcon">
       <slot></slot>
     </i>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+const emit = defineEmits(['iconClicked', 'update:modelValue'])
+const inputRef = ref(null)
+function handleIcon() {
+  inputRef.value.focus()
+  setTimeout(() => {
+    const val = inputRef.value.value
+    inputRef.value.value = ''
+    inputRef.value.value = val
+  }, 0)
+  emit('iconClicked')
+}
 defineProps({
   placeholder: {
     type: String,
@@ -61,13 +74,14 @@ i {
   border: 1px solid var(--primary-color);
 }
 .input {
-  caret-shape:block;
+  color: var(--text-color-main);
   width: 100%;
   font-size: 16px;
   padding: 20px;
   border: 1px solid var(--color-outline);
   border-radius: 20px;
 }
+
 .input::placeholder {
   font-size: 16px;
   color: var(--placeholder-color);

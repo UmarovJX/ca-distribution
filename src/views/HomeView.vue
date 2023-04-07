@@ -115,11 +115,7 @@ function seeAllMy() {
   align-items: center;
   margin-bottom: 20px;
 }
-.secondary {
-  font-style: normal;
 
-  color: white;
-}
 
 .header-title h1 {
   color: white;
