@@ -57,7 +57,6 @@ router.beforeEach((to) => {
   const settings = useSettingsStore()
 
   if (!['signin', 'register'].includes(to.name) && settings.token === '') return { name: 'signin' }
-  if (to.fullPath==='/') return {name: 'home'}
 })
 
 export default router

@@ -7,7 +7,6 @@ const router = useRouter()
 function setBgColor() {
   if (tg.colorScheme === 'dark') {
 
-    alert('dark')
     tg.headerColor = 'var(--tg-theme-bg-color)'
   } else {
     //document.getElementById('app').style.backgroundColor = 'var(--tg-theme-bg-color)'
@@ -21,7 +20,6 @@ function setBackBtn() {
   } else {
     tg.BackButton.isVisible = true
     tg.BackButton.onClick(() => {
-      alert()
       router.go(-1)
     })
   }
