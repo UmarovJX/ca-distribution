@@ -29,6 +29,7 @@ watch(
   () => route.fullPath,
   () => setBackBtn()
 )
+alert(tg.themeParams.bgColor)
 </script>
 
 <template>
