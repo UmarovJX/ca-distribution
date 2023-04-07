@@ -41,13 +41,19 @@
       {{ $t(result.is_passed ? 'testPassed' : 'testFailed') }}
     </div>
     <div class="text-center mt-20" :class="colorClass">
-      {{ $t('testResultStat', res) }}
+      {{ t('testResultStat', res) }}
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n({
+  inheritLocale: true,
+  useScope: 'local'
+})
+
 const props = defineProps({
   result: { type: Object, required: true }
 })
