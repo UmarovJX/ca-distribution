@@ -39,7 +39,7 @@
   --outline-color: var(--outline-color-light);
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --secondary-bg-color: var(--dark-element);
     --background-color: var(--dark-bg);
@@ -49,8 +49,17 @@
     --panel-bg-color: var(--dark-element);
     --secondary-text-color: white;
   }
-} */
+}
 .dark {
+  --secondary-bg-color: var(--dark-element);
+  --background-color: var(--dark-bg);
+  --auth-input-bg: var(--dark-element);
+  --text-color-main: white;
+  --footer-bg-color: var(--dark-element);
+  --panel-bg-color: var(--dark-element);
+  --secondary-text-color: white;
+}
+body.dark {
   --secondary-bg-color: var(--dark-element);
   --background-color: var(--dark-bg);
   --auth-input-bg: var(--dark-element);
