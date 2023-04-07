@@ -25,5 +25,15 @@
   "finishedLessons": "Пройдено уроков { finished } из { all}",
   "finishedCourses": "Пройденные курсы",
   "lessonNoAccess": "Данный урок будет доступен после просмотра предыдущего",
-  "startTest": "Начать тест"
+  "startTest": "Начать тест",
+  "duration": " { duration } минут",
+  "finalTest": "Проходной тест",
+  "letsTest": "Давайте закрепим знания",
+  "testHeader": "Курс \"{ name }\"",
+  "questionN": "Вопрос {i}",
+  "submitTest": "Отправить",
+  "testFailed": "Провалено!",
+  "testPassed": "Успешно!",
+  "testResultStat": "Пройдено {result} из {all}",
+  "restart": "Заново"
 }

@@ -3,67 +3,66 @@ import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import CourseCard from '../components/CourseCard.vue'
 import CoursePanel from '../components/CoursePanel.vue'
-import img1 from '../assets/images/1.jpeg'
-import img2 from '../assets/images/2.jpeg'
-import { ref } from 'vue'
+
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useCourses } from '../composables/courses'
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
-const courses = ref([
-  { img: img1, title: 'Продажи', description: 'Основы продаж в B2B сегменте' },
-  { img: img2, title: 'Управление', description: 'Основы контроля...' }
-])
 
-const finishedCourses = ref([
-  { title: 'Продажи', progress: 100, ball: 4 },
-  { title: 'Продажи', progress: 100, ball: 4 },
-  { title: 'Продажи', progress: 100, ball: 4 },
-  { title: 'Продажи', progress: 100, ball: 4 },
-  { title: 'Продажи', progress: 100, ball: 4 }
-])
+const { myCourses, getMyCourses } = useCourses()
+getMyCourses()
+
+const activeCourses = computed(() => {
+  console.log(activeCourses.value)
+  return myCourses.value.filter((course) => course.education_course.status === 'active')
+})
+const finishedCourses = computed(() =>
+  myCourses.value.filter((course) => course.education_course.status === 'completed')
+)
+finishedCourses
+//---TO DO ---> edit finished Courses section
 </script>
 
 <template>
-  <main>
-    <app-header>
-      <div class="header-title">
-        <div>
-          <h1 class="title">{{ t('myCourses') }}</h1>
-          <p class="secondary typo400_14">{{ t('letsStart') }}</p>
+  <div>
+    <main>
+      <app-header>
+        <div class="header-title">
+          <div>
+            <h1 class="title">{{ t('myCourses') }}</h1>
+            <p class="secondary typo400_14">{{ t('letsStart') }}</p>
+          </div>
         </div>
-      </div>
-    </app-header>
+      </app-header>
 
-    <div class="part">
-      <h2 class="section-header">{{ t('activeCourses') }}</h2>
-    </div>
-    <div class="scroll-horizontal">
-      <course-card
-        v-for="course in courses"
-        :key="course.title"
-        :img="course.img"
-        :title="course.title"
-        :description="t('finishedLessons', { finished: 4, all: 8 })"
-        vertical
-        :progress="25"
-      ></course-card>
-    </div>
-    <div class="part">
-      <h2 class="section-header">{{ t('finishedCourses') }}</h2>
-    </div>
-    <div class="container">
-      <CoursePanel
-        v-for="course in finishedCourses"
-        :key="course.title"
-        :title="course.title"
-        :progress="course.progress"
-        :balls="4"
-      ></CoursePanel>
-    </div>
-  </main>
-  <AppFooter></AppFooter>
+      <div class="part">
+        <h2 class="section-header">{{ t('activeCourses') }}</h2>
+      </div>
+      <div class="scroll-horizontal">
+        <course-card
+          v-for="course in activeCourses"
+          :course="course"
+          :key="course.id"
+          :description="'progress'"
+          vertical
+        ></course-card>
+      </div>
+      <div class="part">
+        <h2 class="section-header">{{ t('finishedCourses') }}</h2>
+      </div>
+      <div class="container">
+        <CoursePanel
+          v-for="course in activeCourses"
+          :course="course"
+          :key="course.id"
+        ></CoursePanel>
+      </div>
+    </main>
+    <AppFooter></AppFooter>
+  </div>
 </template>
 
 <style>

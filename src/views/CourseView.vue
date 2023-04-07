@@ -1,16 +1,20 @@
 <script setup>
 import AppFooter from '../components/AppFooter.vue'
-import { computed } from 'vue'
+import { computed,} from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import LessonPanel from '../components/LessonPanel.vue'
+
+//import LessonPanel from '../components/LessonPanel.vue'
+import LessonList from '../components/LessonList.vue'
 import { useSettingsStore } from '../stores/settings'
 import { useCourses } from '../composables/courses'
-import { useRoute } from 'vue-router'
+//import { usePlayer } from '@vue-youtube/core'
 const settings = useSettingsStore()
 const route = useRoute()
 
-const { course, getCource } = useCourses()
-getCource(route.params.id)
+const { course, getCourse, lessons, getCourseLessons } = useCourses()
+getCourse(route.params.id)
+getCourseLessons(route.params.id)
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
@@ -19,13 +23,30 @@ const course_duration = computed(() => {
   const hours = Math.floor(course.value.duration_in_minutes / 60)
   const minutes = course.value.duration_in_minutes % 60
 
-  return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} `+'min'
+  return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
+
+// const youtube = ref()
+// const videoId = ref('zSDWzPNWlT8')
+// const { instance, onReady } = usePlayer(videoId, youtube, {
+//   width: 200,
+//   height: 145,
+//   playerVars: { showinfo: 0, controls: 0, rel: 0,}
+// })
+// onReady(() => {
+//   instance.value.getIframe().classList.add('youtube_iframe')
+// })
+// instance
 </script>
 <template>
-  <div>
-    <div class="container child_mt_20" v-if="course">
+  <div class=" mh-100">
+    <div class="container" style="margin-top: 20px">
+      <div ref="youtube"></div>
+    </div>
+
+    <div class="container child_mt_20 flex-column mh-100 " v-if="course">
       <img
+        v-if="!videoId"
         :src="course.image.widen_500.webp"
         :alt="course.name[settings.lang]"
         class="course_banner"
@@ -53,12 +74,8 @@ const course_duration = computed(() => {
         <span class="typo600_12">{{ course_duration }}</span>
       </div>
       <div class="typo400_14 course_description">{{ course.description[settings.lang] }}</div>
-      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
-      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
-      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="100"></LessonPanel>
-      <LessonPanel :index="1" :title="'Продажи'" :duration="25" :progress="50"></LessonPanel>
-      <LessonPanel :index="1" :title="'Продажи'"></LessonPanel>
-      <button>{{ t('startTest') }}</button>
+      <LessonList :lessons="lessons"></LessonList>
+      <button v-if="lessons[lessons.length-1]?.is_completed">{{ t('startTest') }}</button>
     </div>
     <AppFooter></AppFooter>
   </div>
@@ -68,9 +85,7 @@ const course_duration = computed(() => {
 .child_mt_20 > *:not(:first-child) {
   margin-top: 20px;
 }
-.mb-20 {
-  margin-bottom: 20px;
-}
+
 .course_description {
   color: #666666;
 }

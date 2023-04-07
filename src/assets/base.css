@@ -1,5 +1,17 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
+  --ocean-green: #42c6a5;
+  --violet: #7061e1;
+  --light-purple: #8d7cfc;
+  --black: #1a1a1a;
+  --no-active: #b3b3b3;
+  --orange: #fc8d2d;
+  --secondary-text: #666666;
+  --red: #e22c4e;
+  --dark-bg: #0e1621;
+  --dark-element: #182533;
+  --no-active-white: #8B9299;
+
   --vt-c-white: #ffffff;
   --text-color-light: #1a1a1a;
   --placeholder-color-light: #b3b3b3;
@@ -7,7 +19,7 @@
   --outline-color-light: #42c6a5;
   --info-color-light: #fc8d2d;
   --secondary-color-light: #f2f0ff;
-  --background-color-light: #F8F7FC;
+  --background-color-light: #f8f7fc;
 }
 
 /* semantic color variables for this project */
@@ -18,6 +30,7 @@
   --primary-color: var(--primary-color-light);
   --secondary-color: var(--secondary-color-light);
   --background-color: var(--background-color-light);
+  --outline-color: var(--outline-color-light);
 }
 
 @media (prefers-color-scheme: dark) {

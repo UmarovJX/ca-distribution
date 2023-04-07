@@ -7,16 +7,23 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import { useCourses } from '../composables/courses'
+import { useRouter } from 'vue-router'
+import authService from '../services/authService'
+const router = useRouter()
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
+authService.getUser();
 const search = ref('')
 
 const { allCourses, myCourses, getAll, getMyCourses } = useCourses()
 getAll()
 getMyCourses()
 const settings = useSettingsStore()
+function seeAllMy() {
+  router.push({ name: 'mycourses' })
+}
 </script>
 
 <template>
@@ -48,39 +55,21 @@ const settings = useSettingsStore()
         </base-input>
       </div>
     </app-header>
-    <main v-if="allCourses && myCourses">
+    <main>
       <div class="part">
         <h2 class="section-header">{{ t('allCourses') }}</h2>
         <span class="section-secondary">{{ t('viewAll') }}</span>
       </div>
       <div class="scroll-horizontal">
-        <template v-if="allCourses">
-          <course-card
-            v-for="course in allCourses"
-            :id="course.id"
-            :key="course.id"
-            :img="course.image.widen_500.webp"
-            :title="course.name[settings.lang]"
-            :description="course.description[settings.lang]"
-          ></course-card>
-        </template>
+        <course-card v-for="course in allCourses" :course="course" :key="course.id"></course-card>
       </div>
 
       <div class="part">
         <h2 class="section-header">{{ t('myCourses') }}</h2>
-        <span class="section-secondary">{{ t('viewAll') }}</span>
+        <span class="section-secondary" @click="seeAllMy">{{ t('viewAll') }}</span>
       </div>
       <div class="scroll-horizontal">
-        <template v-if="myCourses">
-          <course-card
-            v-for="course in myCourses"
-            :id="course.id"
-            :key="course.id"
-            :img="course.image.widen_500.webp"
-            :title="course.name[settings.lang]"
-            :description="course.description[settings.lang]"
-          ></course-card>
-        </template>
+        <course-card v-for="course in myCourses" :course="course" :key="course.id"></course-card>
       </div>
     </main>
     <AppFooter></AppFooter>

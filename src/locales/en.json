@@ -1,12 +1,12 @@
 {
-  "register": "Регистрация",
-  "create_new_account": "Создайте новый аккаунт",
+  "register": "Register",
+  "create_new_account": "Create new account",
   "placeholders": {
-    "username": "Имя пользователя",
-    "email": "Электронная почта",
-    "password": "Пароль"
+    "username": "Username",
+    "email": "Email",
+    "password": "Password"
   },
-  "haveAccount": "Уже есть аккаунт?",
+  "haveAccount": "Already have account?",
   "noAccount": "Нет аккаунта?",
   "signIn": "Войти",
   "enterData": "Введите данные",
@@ -18,12 +18,13 @@
   "allCourses": "Все курсы",
   "myCourses": "Мои курсы",
   "activeCourses": "Активные курсы",
-  "viewAll": "Смотреть все",
+  "viewAll": "View all",
   "scanner": "Scanner",
-  "study": "Обучение",
-  "rating": "Рейтинг",
-  "finishedLessons": "Пройдено уроков { finished } из { all}",
-  "finishedCourses": "Пройденные курсы",
+  "study": "Learning",
+  "rating": "Rating",
+  "finishedLessons": "Finished { finished } lessons out of { all}",
+  "finishedCourses": "Finished courses",
   "lessonNoAccess": "Данный урок будет доступен после просмотра предыдущего",
-  "startTest": "Начать тест"
+  "startTest": "Start test",
+  "duration": " { duration } minutes"
 }

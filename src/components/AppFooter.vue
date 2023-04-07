@@ -1,15 +1,15 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n({
-  inheritLocale: true,
-  useScope: 'local'
-})
+import { useRouter } from 'vue-router'
+const router = useRouter()
+function goTo(name) {
+  router.push({ name })
+}
 </script>
 
 <template>
   <div class="footer-placeholder"></div>
   <footer class="footer">
-    <div>
+    <div @click="goTo('home')">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -26,7 +26,7 @@ const { t } = useI18n({
           fill="#7061E1"
         />
       </svg>
-      <p>{{ t('study') }}</p>
+      <p>{{ $t('study') }}</p>
     </div>
 
     <div>
@@ -63,7 +63,7 @@ const { t } = useI18n({
         />
         <path d="M2 12H22" stroke="#7061E1" stroke-width="1.5" stroke-linecap="round" />
       </svg>
-      <p>{{ t('scanner') }}</p>
+      <p>{{ $t('scanner') }}</p>
     </div>
     <div>
       <svg
@@ -85,7 +85,7 @@ const { t } = useI18n({
           stroke-linecap="round"
         />
       </svg>
-      <p>{{ t('rating') }}</p>
+      <p>{{ $t('rating') }}</p>
     </div>
   </footer>
 </template>

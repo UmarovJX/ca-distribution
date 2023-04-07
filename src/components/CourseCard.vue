@@ -1,27 +1,39 @@
 <script setup>
+import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
-const router = useRouter()
-const props = defineProps({
-  id: { type: Number },
-  vertical: { type: Boolean, default: false },
-  img: {
-    type: String
-  },
-  title: {
-    type: String
-  },
-  description: {
-    type: String
-  },
-  progress: {
-    type: Number,
-    default: 0
-  }
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+const settings = useSettingsStore()
+const { t } = useI18n({
+  inheritLocale: true,
+  useScope: 'local'
 })
 
+const router = useRouter()
+const props = defineProps({
+  course: Object,
+  id: { type: Number },
+  vertical: { type: Boolean, default: false },
+
+  description: {
+    type: String
+  }
+})
+const desc_string = computed(() =>
+  props.description === 'progress'
+    ? t('finishedLessons', {
+        finished: props.course.education_course.completed_lessons_count,
+        all: props.course.lessons_count
+      })
+    : props.course.description[settings.lang]
+)
+const progress = computed(
+  () => props.description === 'progress' ? (props.course.education_course.completed_lessons_count / props.course.lessons_count) * 100: 0
+)
 function handleClick() {
-  router.push({ name: 'course', params: { id: props.id } })
+  router.push({ name: 'course', params: { id: props.course.id } })
 }
+
 </script>
 
 <template>
@@ -32,7 +44,11 @@ function handleClick() {
         image_container__horizontal: !vertical
       }"
     >
-      <img :src="img" :alt="title" @click="handleClick" />
+      <img
+        :src="course.image.widen_500.webp"
+        :alt="course.name[settings.lang]"
+        @click="handleClick"
+      />
       <div class="course-progress" v-if="progress">
         <div></div>
         <div class="card-svg">
@@ -55,8 +71,8 @@ function handleClick() {
       </div>
     </div>
 
-    <h2 class="card-title">{{ title }}</h2>
-    <p class="card-description">{{ description }}</p>
+    <h2 class="card-title">{{ course.name[settings.lang] }}</h2>
+    <p class="card-description">{{ desc_string }}</p>
   </div>
 </template>
 

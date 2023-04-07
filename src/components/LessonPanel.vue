@@ -1,35 +1,33 @@
 <script setup>
 import ProgressBar from '../components/ProgressBar.vue'
+import { useSettingsStore } from '../stores/settings'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n({
-  inheritLocale: true,
-  useScope: 'local'
+  inheritLocale: true
 })
-defineProps({
+const settings = useSettingsStore()
+const props = defineProps({
+  isAvailable: {
+    type: Boolean
+  },
   index: {
     type: Number,
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  },
-  duration: {
-    type: Number
-  },
-  progress: {
-    type: Number,
-    default: 0
-  }
+  lesson: { type: Object }
 })
+const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
+const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
 </script>
 
 <template>
   <div class="panel">
-    <div class="typo400_24 mr-20">{{ '0' + index }}</div>
+    <div class="typo400_24 mr-20">{{ indexString }}</div>
     <div class="lesson_details">
-      <div class="typo700_14 mb-7">{{ title }}</div>
-      <div class="hint_text" v-if="duration">
+      <div class="typo700_14 mb-7">{{ lesson.name[settings.lang] }}</div>
+      <div class="hint_text" v-if="isAvailable">
+        <!-- duration icon -->
         <svg
           width="24"
           height="24"
@@ -48,9 +46,10 @@ defineProps({
             fill="white"
           />
         </svg>
-        <span class="typo600_12 mr-12"> {{ duration }}</span>
+        <span class="typo600_12 mr-12"> {{ t('duration', { duration: 20 }) }}</span>
+        <!-- is completed icon -->
         <svg
-          v-if="progress === 100"
+          v-if="lesson.is_completed === true"
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -68,9 +67,9 @@ defineProps({
       </div>
       <div v-else class="typo400_10 mw_170 color_disabled">{{ t('lessonNoAccess') }}</div>
     </div>
-    <ProgressBar :progress="60" v-if="duration"></ProgressBar>
+    <ProgressBar :progress="progress" v-if="isAvailable"></ProgressBar>
     <div v-else class="flex lock_container">
-      <div style="width:10px;"></div>
+      <div style="width: 10px"></div>
       <svg
         width="24"
         height="24"
@@ -109,15 +108,7 @@ defineProps({
 .hint_text svg {
   margin-right: 5px;
 }
-.mr-20 {
-  margin-right: 20px;
-}
-.mb-7 {
-  margin-bottom: 7px;
-}
-.mr-12 {
-  margin-right: 12px;
-}
+
 .black {
   color: #1a1a1a;
 }

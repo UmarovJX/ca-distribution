@@ -18,7 +18,6 @@ function goToRegister() {
 function handleForm() {
   authService
     .signIn(username.value, password.value)
-    .then(authService.getUser())
     .then(() => router.push({ name: 'home' }))
 }
 const username = ref('')

@@ -3,9 +3,10 @@ import { useSettingsStore } from '../stores/settings.js'
 function signIn(username, password) {
   const settings = useSettingsStore()
   return axios.postForm('common/auth/login', { password, username }).then((response) => {
-    settings.setToken(response.data.token)
+     return settings.setToken(response.data.token)
   })
 }
+
 function getUser() {
   const settings = useSettingsStore()
 
