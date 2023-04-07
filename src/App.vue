@@ -6,11 +6,13 @@ const route = useRoute()
 const router = useRouter()
 function setBgColor() {
   if (tg.colorScheme === 'dark') {
-    //document.getElementById('app').style.backgroundColor = 'var(--tg-theme-bg-color)'
-    tg.headerColor = 'red'
+    alert('dark')
+
+    tg.headerColor = 'var(--primary-color)'
   } else {
+    alert('light')
     //document.getElementById('app').style.backgroundColor = 'var(--tg-theme-bg-color)'
-    tg.headerColor = 'blue'
+    tg.headerColor = 'var(--primary-color)'
   }
 }
 
@@ -29,7 +31,6 @@ watch(
   () => route.fullPath,
   () => setBackBtn()
 )
-alert(tg.themeParams.bgColor)
 </script>
 
 <template>
