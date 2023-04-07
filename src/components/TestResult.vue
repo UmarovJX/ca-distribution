@@ -41,10 +41,8 @@
       {{ $t(result.is_passed ? 'testPassed' : 'testFailed') }}
     </div>
     <div class="text-center mt-20" :class="colorClass">
-      {{ $t('testResultStat', { result: props.result.correct_quantity, all: props.result.total_quantity }) }}
+      {{ $t('testResultStat', res) }}
     </div>
-
-
   </div>
 </template>
 
@@ -55,15 +53,17 @@ const props = defineProps({
 })
 
 const colorClass = computed(() => (props.result.is_passed ? 'green-text' : 'red-text'))
+let res = computed(() => ({
+  all: props.result.total_quantity,
+  result: props.result.correct_quantity
+}))
 alert(JSON.stringify(props.result))
 </script>
 
 <style scoped>
-
 .flex-center {
   justify-content: center;
 }
-
 
 .text-center {
   text-align: center;
