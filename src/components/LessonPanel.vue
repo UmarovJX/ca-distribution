@@ -20,7 +20,7 @@ const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
 const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
 
 function handleClick() {
-  router.push({ name: 'lesson', params: { id: props.lesson.course_id, lessonid: props.lesson.id } })
+  router.push({ name: 'lesson', params: { id: props.lesson.course_id, lessonid: props.lesson.id, video: props.lesson.video.slice(17)} })
 }
 </script>
 

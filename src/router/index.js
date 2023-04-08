@@ -42,7 +42,7 @@ const router = createRouter({
       component: TestView
     },
     {
-      path: '/course/:id/lesson/:lessonid',
+      path: '/course/:id/lesson/:lessonid/:video',
       name: 'lesson',
       component: LessonView
     },

@@ -1,6 +1,6 @@
 <script setup>
 import AppFooter from '../components/AppFooter.vue'
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { YoutubeIframe } from '@vue-youtube/component'
@@ -30,19 +30,12 @@ const lessonDuration = computed(() => {
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
 const width = computed(() => window.innerWidth)
-const videoId = ref('')
-watch(
-  () => lesson.value,
-  () => (videoId.value = lesson.value.video.slice(17))
-)
 
 //const { instance, onReady } =
 </script>
 <template>
   <div class="mh-100">
-    <div v-if="videoId">
-      <YoutubeIframe :id="videoId" :width="width" class="youtube_iframe"></YoutubeIframe>
-    </div>
+    <YoutubeIframe :id="route.params.video" :width="width" class="youtube_iframe"></YoutubeIframe>
 
     <div class="container child_mt_20 flex-column mh-100" v-if="course && lesson">
       <h2 class="typo700_14 course-title-small">{{ course.name[settings.lang] }}</h2>
