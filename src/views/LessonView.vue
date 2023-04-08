@@ -30,7 +30,7 @@ const lessonDuration = computed(() => {
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
 const width = computed(() => window.innerWidth)
-const videoId = ref('krujesKwb5s')
+const videoId = ref('')
 watch(
   () => lesson.value,
   () => (videoId.value = lesson.value.video.slice(17))
