@@ -1,8 +1,7 @@
 <script setup>
 import AppFooter from '../components/AppFooter.vue'
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 import LessonList from '../components/LessonList.vue'
 import { useSettingsStore } from '../stores/settings'
@@ -10,47 +9,22 @@ import { useCourses } from '../composables/courses'
 //import { usePlayer } from '@vue-youtube/core'
 const settings = useSettingsStore()
 const route = useRoute()
-const router = useRouter()
-
-function startTest() {
-  router.push({ name: 'test', params: { id: route.params.id } })
-}
 
 const { course, getCourse, lessons, getCourseLessons } = useCourses()
 getCourse(route.params.id)
 getCourseLessons(route.params.id)
-const { t } = useI18n({
-  inheritLocale: true,
-  useScope: 'local'
-})
+
 const course_duration = computed(() => {
   const hours = Math.floor(course.value.duration_in_minutes / 60)
   const minutes = course.value.duration_in_minutes % 60
 
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
-
-// const youtube = ref()
-// const videoId = ref('zSDWzPNWlT8')
-// const { instance, onReady } = usePlayer(videoId, youtube, {
-//   width: 200,
-//   height: 145,
-//   playerVars: { showinfo: 0, controls: 0, rel: 0,}
-// })
-// onReady(() => {
-//   instance.value.getIframe().classList.add('youtube_iframe')
-// })
-// instance
 </script>
 <template>
   <div class="mh-100">
-    <div class="container" style="margin-top: 20px">
-      <div ref="youtube"></div>
-    </div>
-
     <div class="container child_mt_20 flex-column mh-100" v-if="course">
       <img
-        v-if="!videoId"
         :src="course.image.widen_500.webp"
         :alt="course.name[settings.lang]"
         class="course_banner"
@@ -79,8 +53,6 @@ const course_duration = computed(() => {
       </div>
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
       <LessonList :lessons="lessons"></LessonList>
-      <button @click="startTest">{{ t('startTest') }}</button>
-      <!-- v-if="lessons[lessons.length-1]?.is_completed" -->
     </div>
     <AppFooter></AppFooter>
   </div>
@@ -95,8 +67,7 @@ const course_duration = computed(() => {
   color: #666666;
 }
 .course_banner {
-  width: 350px;
-  margin: 0 auto;
+  width: 100%;
   aspect-ratio: auto;
   margin: 20px 0;
   border-radius: 30px;
