@@ -27,6 +27,10 @@ function getCourseLessons(courseId) {
     .then((response) => response.data.data)
 }
 
+function getLesson(id) {
+  return axios.get(lessonsURL + `/${id}`).then((response) => response.data)
+}
+
 function getTests(courseId) {
   //Mock
   courseId
@@ -110,4 +114,12 @@ function submitTest(data) {
     })
   }
 }
-export default { getCourses, getMyCourses, getCourse, getCourseLessons, getTests, submitTest }
+export default {
+  getCourses,
+  getMyCourses,
+  getCourse,
+  getCourseLessons,
+  getTests,
+  submitTest,
+  getLesson
+}

@@ -9,10 +9,11 @@ import i18n from './plugins/i18n'
 
 import './assets/main.css'
 export const tg = window.Telegram.WebApp
-tg.expand();
+
 const app = createApp(App)
 app.use(createManager())
 app.use(pinia)
 app.use(router)
 app.use(i18n)
 app.mount('#app')
+tg.expand()

@@ -21,6 +21,11 @@ export function useCourses() {
     courses.getCourseLessons(courseId).then((data) => (lessons.value = data))
   }
 
+  const lesson = ref(null)
+  function getLesson(id) {
+    courses.getLesson(id).then((data) => (lesson.value = data))
+  }
+
   const tests = ref([])
   function getTests(courseId) {
     courses.getTests(courseId).then((data) => (tests.value = data))
@@ -36,6 +41,8 @@ export function useCourses() {
     lessons,
     getCourseLessons,
     tests,
-    getTests
+    getTests,
+    lesson,
+    getLesson
   }
 }

@@ -6,7 +6,7 @@ import SignInView from '../views/SignInView.vue'
 import MyCoursesView from '../views/MyCoursesView.vue'
 import CourseView from '../views/CourseView.vue'
 import TestView from '../views/TestView.vue'
-
+import LessonView from '../views/LessonView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,10 +35,16 @@ const router = createRouter({
       name: 'course',
       component: CourseView
     },
+
     {
       path: '/course/:id/test',
       name: 'test',
       component: TestView
+    },
+    {
+      path: '/course/:id/lesson/:lessonid',
+      name: 'lesson',
+      component: LessonView
     },
 
     {

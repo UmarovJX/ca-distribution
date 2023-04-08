@@ -169,3 +169,7 @@ button:disabled {
 
   color: var(--secondary-text-color);
 }
+
+.course-title-small {
+  color: var(--violet);
+}

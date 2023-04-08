@@ -2,10 +2,7 @@
 import ProgressBar from '../components/ProgressBar.vue'
 import { useSettingsStore } from '../stores/settings'
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n({
-  inheritLocale: true
-})
+
 const settings = useSettingsStore()
 const props = defineProps({
   isAvailable: {
@@ -46,7 +43,7 @@ const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
             fill="white"
           />
         </svg>
-        <span class="typo600_12 mr-12"> {{ t('duration', { duration: 20 }) }}</span>
+        <span class="typo600_12 mr-12"> {{ $t('duration', { duration: 20 }) }}</span>
         <!-- is completed icon -->
         <svg
           v-if="lesson.is_completed === true"
@@ -65,7 +62,7 @@ const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
         </svg>
         <span v-if="progress === 100" class="typo600_12 black"> {{ progress + '%' }}</span>
       </div>
-      <div v-else class="typo400_10 mw_170 color_disabled">{{ t('lessonNoAccess') }}</div>
+      <div v-else class="typo400_10 mw_170 color_disabled">{{ $t('lessonNoAccess') }}</div>
     </div>
     <ProgressBar :progress="progress" v-if="isAvailable"></ProgressBar>
     <div v-else class="flex lock_container">

@@ -1,5 +1,5 @@
 <template>
-  <div class="lesson_list flex-grow">
+  <div class="lesson_list">
     <LessonPanel
       v-for="(lesson, i) in lessons"
       :key="lesson.id"

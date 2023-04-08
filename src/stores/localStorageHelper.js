@@ -10,13 +10,16 @@ export default {
   },
   saveAll(arr) {
     arr.forEach((element) => {
+      if (typeof element[1] === 'object') return this.saveObj(...element)
       this.set(...element)
     })
   },
   saveObj(key, data) {
     localStorage.setItem(key, JSON.stringify(data))
   },
-  getObj(key){
-    return JSON.parse(localStorage.getItem(key))
+  getObj(key) {
+    const data = localStorage.getItem(key)
+    if (data) return JSON.parse(localStorage.getItem(key))
+    return {}
   }
 }
