@@ -7,6 +7,7 @@
       :index="i + 1"
       :isAvailable="lessons[i - 1]?.is_completed || i === 0"
     ></LessonPanel>
+    <div></div>
     <button @click="startTest" class="mt-auto">{{ $t('startTest') }}</button>
     <!-- v-if="lessons[lessons.length-1]?.is_completed" -->
   </div>

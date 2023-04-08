@@ -29,7 +29,7 @@
         <button
           v-if="testState == 'view'"
           @click="submitTest"
-          class="typo600_16 text_primary mt-40"
+          class="typo600_16  mt-40"
           :disabled="!(answers.length == tests.length) || loading"
         >
           {{ $t('submitTest') }}
@@ -38,14 +38,14 @@
           :class="testResult.is_passed ? '' : 'mr-20'"
           v-if="testState == 'result'"
           @click="goMyCourses"
-          class="typo600_16 text_primary mt-40"
+          class="typo600_16  mt-40"
         >
           {{ $t('myCourses') }}
         </button>
         <button
           v-if="testState == 'result' && !testResult.is_passed"
           @click="initPage"
-          class="typo600_16 text_primary mt-40"
+          class="typo600_16  mt-40"
         >
           {{ $t('restart') }}
         </button>

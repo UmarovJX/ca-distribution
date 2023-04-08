@@ -87,13 +87,15 @@ input:hover + .input_icon {
 .input_icon {
   stroke: #42c6a5;
 }
-button:hover {
+button:hover:enabled {
   background-color: var(--violet);
   color: white;
 }
 button:disabled {
-  background-color: grey;
+opacity: 0.3;
+background-color: bisque;
 }
+
 .panel {
   background-color: var(--panel-bg-color);
   border-radius: 20px;
@@ -132,7 +134,7 @@ button:disabled {
 }
 
 .text_primary {
-  color: white;
+  color: var(--text-color-main);
 }
 
 .mt-40 {
