@@ -1,9 +1,11 @@
 <script setup>
 import ProgressBar from '../components/ProgressBar.vue'
+import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../stores/settings'
 import { computed } from 'vue'
 
 const settings = useSettingsStore()
+const router = useRouter()
 const props = defineProps({
   isAvailable: {
     type: Boolean
@@ -16,10 +18,14 @@ const props = defineProps({
 })
 const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
 const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
+
+function handleClick() {
+  router.push({ name: 'lesson', params: { id: props.lesson.course_id, lessonid: props.lesson.id } })
+}
 </script>
 
 <template>
-  <div class="panel">
+  <div class="panel" @click="handleClick">
     <div class="typo400_24 mr-20">{{ indexString }}</div>
     <div class="lesson_details">
       <div class="typo700_14 mb-7">{{ lesson.name[settings.lang] }}</div>
