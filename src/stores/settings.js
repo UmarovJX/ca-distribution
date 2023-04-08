@@ -19,19 +19,18 @@ export const useSettingsStore = defineStore('settings', () => {
 
   ls.saveAll([
     ['lang', lang.value],
-    ['token', token.value],
-    ['user', user.value]
+    ['token', token.value]
   ])
 
   function clear() {
     token.value = ''
+    lang.value = ''
     user.value = {}
     ls.saveAll([
       ['lang', lang.value],
-      ['token', token.value],
-      ['user', user.value]
+      ['token', token.value]
     ])
   }
 
-  return { lang, token, user, setToken, setUser,clear }
+  return { lang, token, user, setToken, setUser, clear }
 })

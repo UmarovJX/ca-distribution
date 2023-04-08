@@ -26,7 +26,10 @@ const width = computed(() => window.innerWidth)
 </script>
 <template>
   <div class="mh-100">
-    <YoutubeIframe :id="route.params.video" :width="width" class="youtube_iframe"></YoutubeIframe>
+    <div>
+      <YoutubeIframe :id="route.params.video" :width="width" class="youtube_iframe"></YoutubeIframe>
+      <div class="ttt"></div>
+    </div>
     <div class="container child_mt_20 flex-column mh-list" v-if="course && lesson">
       <h2 class="typo700_14 course-title-small">{{ course.name[settings.lang] }}</h2>
       <h1 class="typo700_24">{{ lesson.name[settings.lang] }}</h1>
@@ -90,5 +93,11 @@ const width = computed(() => window.innerWidth)
 
 .mh-list {
   min-height: calc(100vh - 320px);
+}
+.ttt {
+  border-radius: 10px 10px 0 0;
+  margin-top: -15px;
+  height: 10px;
+  background-color: var(--background-color);
 }
 </style>
