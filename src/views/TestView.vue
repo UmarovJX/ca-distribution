@@ -93,7 +93,6 @@ function handle(newId, oldId) {
   const newArr = answers.value.filter((el) => el !== oldId)
   newArr.push(newId)
   answers.value = newArr
-  console.log(newArr)
 }
 
 function submitTest() {

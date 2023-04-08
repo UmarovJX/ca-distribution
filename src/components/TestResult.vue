@@ -63,7 +63,6 @@ let res = computed(() => ({
   all: props.result.total_quantity,
   result: props.result.correct_quantity
 }))
-alert(JSON.stringify(props.result))
 </script>
 
 <style scoped>
