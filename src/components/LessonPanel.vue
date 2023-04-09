@@ -2,9 +2,11 @@
 import ProgressBar from '../components/ProgressBar.vue'
 import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../stores/settings'
+import { useProgressStore } from '../stores/progress'
 import { computed } from 'vue'
 
 const settings = useSettingsStore()
+const { progress } = useProgressStore()
 const router = useRouter()
 const props = defineProps({
   isAvailable: {
@@ -17,10 +19,22 @@ const props = defineProps({
   lesson: { type: Object }
 })
 const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
-const progress = computed(() => (props.lesson.is_completed ? 100 : 0))
+const progressValue = computed(() => {
+  const key = props.lesson.id + props.lesson.video
+  if (props.lesson.is_completed) return 100
+  if (progress[key]) return progress[key]
+  return 0
+})
 
 function handleClick() {
-  router.push({ name: 'lesson', params: { id: props.lesson.course_id, lessonid: props.lesson.id, video: props.lesson.video.slice(17)} })
+  router.push({
+    name: 'lesson',
+    params: {
+      id: props.lesson.course_id,
+      lessonid: props.lesson.id,
+      video: props.lesson.video.slice(17)
+    }
+  })
 }
 </script>
 
@@ -29,7 +43,7 @@ function handleClick() {
     <div class="typo400_24 mr-20">{{ indexString }}</div>
     <div class="lesson_details">
       <div class="typo700_14 mb-7">{{ lesson.name[settings.lang] }}</div>
-      <div class="hint_text" v-if="isAvailable">
+      <div class="flex" v-if="isAvailable">
         <!-- duration icon -->
         <svg
           width="24"
@@ -49,7 +63,7 @@ function handleClick() {
             fill="white"
           />
         </svg>
-        <span class="typo600_12 mr-12"> {{ $t('duration', { duration: 20 }) }}</span>
+        <span class="typo600_12 mr-12 hint_text"> {{ $t('duration', { duration: 20 }) }}</span>
         <!-- is completed icon -->
         <svg
           v-if="lesson.is_completed === true"
@@ -66,11 +80,11 @@ function handleClick() {
             fill="#42C6A5"
           />
         </svg>
-        <span v-if="progress === 100" class="typo600_12 black"> {{ progress + '%' }}</span>
+        <span v-if="progressValue === 100" class="typo600_12"> {{ progressValue + '%' }}</span>
       </div>
       <div v-else class="typo400_10 mw_170 color_disabled">{{ $t('lessonNoAccess') }}</div>
     </div>
-    <ProgressBar :progress="progress" v-if="isAvailable"></ProgressBar>
+    <ProgressBar :progress="progressValue" v-if="isAvailable"></ProgressBar>
     <div v-else class="flex lock_container">
       <div style="width: 10px"></div>
       <svg

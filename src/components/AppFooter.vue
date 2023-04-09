@@ -96,7 +96,7 @@ const pathStart = computed(() => route.fullPath.split('/')[1])
 
 <style scoped>
 .footer-placeholder {
-  height: 120px;
+  height: 90px;
 }
 .footer {
   display: flex;

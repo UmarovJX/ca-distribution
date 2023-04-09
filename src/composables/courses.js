@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import courses from '../services/courseService.js'
+import { useProgressStore } from '../stores/progress.js'
 export function useCourses() {
   const allCourses = ref([])
   function getAll() {
@@ -19,6 +20,10 @@ export function useCourses() {
   const lessons = ref([])
   function getCourseLessons(courseId) {
     courses.getCourseLessons(courseId).then((data) => (lessons.value = data))
+    const { deleteProgress } = useProgressStore()
+    lessons.value.forEach((lesson) => {
+      if (lesson.is_completed) deleteProgress(lesson.id + lesson.video)
+    })
   }
 
   const lesson = ref(null)

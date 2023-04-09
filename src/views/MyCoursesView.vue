@@ -16,7 +16,6 @@ const { myCourses, getMyCourses } = useCourses()
 getMyCourses()
 
 const activeCourses = computed(() => {
-  console.log(activeCourses.value)
   return myCourses.value.filter((course) => course.education_course.status === 'active')
 })
 const finishedCourses = computed(() =>

@@ -1,13 +1,15 @@
 <script setup>
 import AppFooter from '../components/AppFooter.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { YoutubeIframe } from '@vue-youtube/component'
+import { usePlayer } from '@vue-youtube/core'
 
 import LessonList from '../components/LessonList.vue'
 import { useSettingsStore } from '../stores/settings'
+import { useProgressStore } from '../stores/progress'
 import { useCourses } from '../composables/courses'
 const settings = useSettingsStore()
+const { setProgress, progress } = useProgressStore()
 const route = useRoute()
 
 const { course, getCourse, lessons, getCourseLessons, lesson, getLesson } = useCourses()
@@ -20,14 +22,22 @@ const lessonDuration = computed(() => {
   const minutes = lesson.value.duration_in_minutes % 60
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
-const width = computed(() => window.innerWidth)
 
-//const { instance, onReady } =
+const player = ref(null)
+const { instance, onStateChange } = usePlayer(route.params.video, player)
+onStateChange((event) => {
+  if (event.data === 1 || event.data === 2) {
+    const key = lesson.value.id + lesson.value.video
+    const val = (instance.value.getCurrentTime() / instance.value.getDuration()) * 100
+    if (!progress[key] || val > progress[key])
+      setProgress(key, val)
+  }
+})
 </script>
 <template>
   <div class="mh-100">
     <div>
-      <YoutubeIframe :id="route.params.video.slice(17)" :width="width" class="youtube_iframe"></YoutubeIframe>
+      <div ref="player" class="youtube_iframe"></div>
       <div class="ttt"></div>
     </div>
     <div class="container child_mt_20 flex-column mh-list" v-if="course && lesson">
@@ -92,7 +102,8 @@ const width = computed(() => window.innerWidth)
 }
 
 .mh-list {
-  min-height: calc(100vh - 320px);
+  height: calc(100vh - 320px);
+  overflow-y: scroll;
 }
 .ttt {
   border-radius: 10px 10px 0 0;
