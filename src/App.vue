@@ -21,7 +21,7 @@ function setBackBtn() {
   } else {
     tg.BackButton.isVisible = true
     tg.BackButton.onClick(() => {
-      if (route.fullPath==='/') tg.close();
+      if (route.name === 'home' || route.name === 'signin') return tg.close()
       router.go(-1)
     })
   }
