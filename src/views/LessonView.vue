@@ -27,7 +27,7 @@ const width = computed(() => window.innerWidth)
 <template>
   <div class="mh-100">
     <div>
-      <YoutubeIframe :id="route.params.video" :width="width" class="youtube_iframe"></YoutubeIframe>
+      <YoutubeIframe :id="route.params.video.slice(17)" :width="width" class="youtube_iframe"></YoutubeIframe>
       <div class="ttt"></div>
     </div>
     <div class="container child_mt_20 flex-column mh-list" v-if="course && lesson">
