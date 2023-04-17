@@ -22,8 +22,8 @@ const progress = computed(
 <template>
   <div class="panel">
     <div>
-      <h2 class="section-header mb-5">{{ course.name[settings.lang] }}</h2>
-      <div class="flex">
+      <h2 class="section-header">{{ course.name[settings.lang] }}</h2>
+      <div class="flex mt-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="15"

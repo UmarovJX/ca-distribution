@@ -7,6 +7,9 @@ import MyCoursesView from '../views/MyCoursesView.vue'
 import CourseView from '../views/CourseView.vue'
 import TestView from '../views/TestView.vue'
 import LessonView from '../views/LessonView.vue'
+import WalletHomeView from '../views/WalletHomeView.vue'
+import WalletView from '../views/WalletView.vue'
+import WalletHistoryView from '../views/WalletHistoryView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -54,6 +57,27 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
+    },
+
+    {
+      path: '/wallet',
+      children: [
+        {
+          path: '',
+          name: 'wallethome',
+          component: WalletHomeView
+        },
+        {
+          path: 'wallet',
+          name: 'wallet',
+          component: WalletView
+        },
+        {
+          path: 'history',
+          name: 'wallethistory',
+          component: WalletHistoryView
+        }
+      ]
     }
   ]
 })

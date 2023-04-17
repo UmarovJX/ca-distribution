@@ -27,10 +27,15 @@ const player = ref(null)
 const { instance, onStateChange } = usePlayer(route.params.video, player)
 onStateChange((event) => {
   if (event.data === 1 || event.data === 2) {
-    const key = lesson.value.id + lesson.value.video
+    const key = lesson.value.id
     const val = (instance.value.getCurrentTime() / instance.value.getDuration()) * 100
-    if (!progress[key] || val > progress[key])
+
+    console.log(progress[key])
+    console.log(val)
+
+    if (!progress[key] || val > progress[key]) {
       setProgress(key, val)
+    }
   }
 })
 </script>

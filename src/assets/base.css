@@ -30,6 +30,8 @@
   --footer-bg-color: white;
   --panel-bg-color: var(--secondary-color-light);
   --secondary-text-color: var(--secondary-text);
+  --badge-bg-color: linear-gradient(180deg, #8d7cfc 0%, #7061e1 100%);
+  --badge-bg-color-disabled: var(--secondary-color-light);
 
   --color-outline: var(--outline-color-light);
   --color-focus: var(--primary-colot-light);
@@ -48,6 +50,7 @@
     --footer-bg-color: var(--dark-element);
     --panel-bg-color: var(--dark-element);
     --secondary-text-color: white;
+    --badge-bg-color-disabled: var(--dark-element);
   }
 }
 .dark {
@@ -58,6 +61,7 @@
   --footer-bg-color: var(--dark-element);
   --panel-bg-color: var(--dark-element);
   --secondary-text-color: white;
+  --badge-bg-color-disabled: var(--dark-element);
 }
 body.dark {
   --secondary-bg-color: var(--dark-element);
@@ -67,6 +71,7 @@ body.dark {
   --footer-bg-color: var(--dark-element);
   --panel-bg-color: var(--dark-element);
   --secondary-text-color: white;
+  --badge-bg-color-disabled: var(--dark-element);
 }
 
 *,

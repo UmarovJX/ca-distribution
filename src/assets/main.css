@@ -1,6 +1,10 @@
 @import './base.css';
 @import './typo.css';
 
+header .secondary {
+  color: white;
+}
+
 #app {
   margin: 0 auto;
   height: 100vh;
@@ -92,8 +96,8 @@ button:hover:enabled {
   color: white;
 }
 button:disabled {
-opacity: 0.3;
-background-color: bisque;
+  opacity: 0.3;
+  background-color: bisque;
 }
 
 .panel {
@@ -159,9 +163,7 @@ background-color: bisque;
 .mt-20 {
   margin-top: 20px;
 }
-.mb-5 {
-  margin-bottom: 5px;
-}
+
 .mb-20 {
   margin-bottom: 20px;
 }

@@ -20,29 +20,32 @@ const props = defineProps({
 })
 const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
 const progressValue = computed(() => {
-  const key = props.lesson.id + props.lesson.video
+  const key = props.lesson.id
   if (props.lesson.is_completed) return 100
   if (progress[key]) return progress[key]
   return 0
 })
 
 function handleClick() {
-  router.push({
-    name: 'lesson',
-    params: {
-      id: props.lesson.course_id,
-      lessonid: props.lesson.id,
-      video: props.lesson.video.slice(17)
-    }
-  })
+  if (props.isAvailable)
+    router.push({
+      name: 'lesson',
+      params: {
+        id: props.lesson.course_id,
+        lessonid: props.lesson.id,
+        video: props.lesson.video.slice(17)
+      }
+    })
 }
 </script>
 
 <template>
   <div class="panel" @click="handleClick">
-    <div class="typo400_24 mr-20">{{ indexString }}</div>
+    <div class="typo400_24 mr-20 opacity3">{{ indexString }}</div>
     <div class="lesson_details">
-      <div class="typo700_14 mb-7">{{ lesson.name[settings.lang] }}</div>
+      <div class="typo700_14 mb-7" :class="{ opacity3: !isAvailable }">
+        {{ lesson.name[settings.lang] }}
+      </div>
       <div class="flex" v-if="isAvailable">
         <!-- duration icon -->
         <svg
@@ -106,6 +109,9 @@ function handleClick() {
 </template>
 
 <style>
+.opacity3 {
+  opacity: 0.3;
+}
 .lock_container {
   width: 52px;
   height: 52px;
