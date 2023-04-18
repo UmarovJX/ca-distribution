@@ -5,13 +5,13 @@ import ls from './localStorageHelper'
 export const useProgressStore = defineStore('progress', () => {
   const progress = reactive(ls.getObj('progress') || {})
 
-  function setProgress(url, value) {
-    progress[url] = value
+  function setProgress(id, value) {
+    progress[id] = value
     ls.saveObj('progress', JSON.parse(JSON.stringify(progress)))
   }
 
-  function deleteProgress(url) {
-    delete progress[url]
+  function deleteProgress(id) {
+    delete progress[id]
     ls.saveObj('progress', JSON.parse(JSON.stringify(progress)))
   }
 

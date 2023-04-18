@@ -1,15 +1,23 @@
 <script setup>
 import AppFooter from '../components/AppFooter.vue'
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { usePlayer } from '@vue-youtube/core'
-
+import YoutubePlayer from '../components/YoutubePlayer.vue'
 import LessonList from '../components/LessonList.vue'
+
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
 import { useSettingsStore } from '../stores/settings'
-import { useProgressStore } from '../stores/progress'
 import { useCourses } from '../composables/courses'
+
+import courseService from '../services/courseService'
+import { tg } from '../main'
+import { useI18n } from 'vue-i18n'
+import router from '../router'
+const { t } = useI18n({
+  inheritLocale: true,
+  useScope: 'local'
+})
 const settings = useSettingsStore()
-const { setProgress, progress } = useProgressStore()
 const route = useRoute()
 
 const { course, getCourse, lessons, getCourseLessons, lesson, getLesson } = useCourses()
@@ -17,37 +25,44 @@ getCourse(route.params.id)
 getCourseLessons(route.params.id)
 getLesson(route.params.lessonid)
 
+const duration = ref(0)
 const lessonDuration = computed(() => {
-  const hours = Math.floor(lesson.value.duration_in_minutes / 60)
-  const minutes = lesson.value.duration_in_minutes % 60
+  if (!duration.value) return ''
+  const hours = Math.floor(duration.value / 3600)
+  const minutes = Math.floor(duration.value / 60) - hours * 60
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
 const videoId = ref('')
-const i = route.params.video.indexOf('?v=')
-if (~i) videoId.value = route.params.video.substring(i + 3, i + 14)
-console.log(videoId.value)
-const player = ref(null)
-const { instance, onStateChange } = usePlayer(route.params.video, player)
-onStateChange((event) => {
-  if (event.data === 1 || event.data === 2) {
-    const key = lesson.value.id
-    const val = (instance.value.getCurrentTime() / instance.value.getDuration()) * 100
-
-    console.log(progress[key])
-    console.log(val)
-
-    if (!progress[key] || val > progress[key]) {
-      setProgress(key, val)
-    }
+watch(lesson, () => {
+  const i = lesson.value.video.indexOf('?v=')
+  if (~i) videoId.value = lesson.value.video.substring(i + 3, i + 14)
+  else videoId.value = lesson.value.video.substring(17)
+  console.log(videoId.value)
+})
+watch(course, () => {
+  if (!course.value.education_course) {
+    courseService.startCourse(route.params.id).catch(() => {
+      tg.showAlert(t('courseStartFail'), () => router.go(-1))
+    })
   }
 })
+
+courseService.startCourse(route.params.id).catch(() => {
+  tg.showAlert(t('courseStartFail'), () => router.go(-1))
+})
+
+function handleLessonFinish() {}
 </script>
 <template>
   <div class="mh-100">
-    <div>
-      <div ref="player" class="youtube_iframe"></div>
-      <div class="ttt"></div>
-    </div>
+    <YoutubePlayer
+      :key="videoId"
+      :video-id="videoId"
+      :lesson-id="lesson.id"
+      v-if="lesson"
+      @duration="duration = $event"
+      @finish="handleLessonFinish"
+    ></YoutubePlayer>
     <div class="container child_mt_20 flex-column mh-list" v-if="course && lesson">
       <h2 class="typo700_14 course-title-small">{{ course.name[settings.lang] }}</h2>
       <h1 class="typo700_24">{{ lesson.name[settings.lang] }}</h1>
@@ -112,11 +127,5 @@ onStateChange((event) => {
 .mh-list {
   height: calc(100vh - 320px);
   overflow-y: scroll;
-}
-.ttt {
-  border-radius: 10px 10px 0 0;
-  margin-top: -15px;
-  height: 10px;
-  background-color: var(--background-color);
 }
 </style>

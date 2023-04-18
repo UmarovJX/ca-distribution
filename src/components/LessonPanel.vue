@@ -32,8 +32,7 @@ function handleClick() {
       name: 'lesson',
       params: {
         id: props.lesson.course_id,
-        lessonid: props.lesson.id,
-        video: props.lesson.video.slice(17)
+        lessonid: props.lesson.id
       }
     })
 }

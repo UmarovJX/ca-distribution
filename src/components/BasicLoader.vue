@@ -1,5 +1,5 @@
 <template>
-  <div class="loader mt-20">
+  <div class="flex loader mt-20">
     <div class="lds-spinner">
       <div></div>
       <div></div>
@@ -21,7 +21,9 @@
 
 <style scoped>
 .loader {
-  text-align: center;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 .lds-spinner {
   color: red;

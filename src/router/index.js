@@ -45,7 +45,7 @@ const router = createRouter({
       component: TestView
     },
     {
-      path: '/course/:id/lesson/:lessonid/:video',
+      path: '/course/:id/lesson/:lessonid',
       name: 'lesson',
       component: LessonView
     },

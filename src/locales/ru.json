@@ -18,6 +18,8 @@
       }
     }
   },
+  "found_courses": "Найденные курсы",
+  "notFound": "Не найдено",
   "register": "Регистрация",
   "create_new_account": "Создайте новый аккаунт",
   "placeholders": {
@@ -54,5 +56,6 @@
   "testFailed": "Провалено!",
   "testPassed": "Успешно!",
   "testResultStat": "Пройдено {result} из {all}",
-  "restart": "Заново"
+  "restart": "Заново",
+  "courseStartFail":"Не удалось начать курс. Попробуйте позже"
 }

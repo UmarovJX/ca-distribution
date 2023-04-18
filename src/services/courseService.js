@@ -6,23 +6,34 @@ function getCourse(id) {
   return axios.get(courseURL + `/${id}`).then((response) => response.data)
 }
 
+function startCourse(course_id) {
+  return axios.postForm(courseURL + `/start`, { course_id })
+}
+
+function completeLesson(lesson_id) {
+  return axios.postForm(lessonsURL + `/complete`, { lesson_id })
+}
+
 function search(text) {
   return axios
     .get(courseURL, { params: { 'filter[name]': text } })
     .then((response) => response.data.data)
 }
-search('course')
 
-function getCourses() {
-  return axios.get(courseURL).then((response) => response.data.data)
+function getCourses(options = { statusList: [] }) {
+  const params = {}
+  options.statusList.forEach((status, i) => {
+    params[`filter[education_course.status][${{ i }}]`] = status
+  })
+  return axios.get(courseURL, { params }).then((response) => response.data.data)
 }
 
 function getMyCourses() {
   return axios
     .get(courseURL, {
       params: {
-        'filter[education_course.status][0]': 'active',
-        'filter[education_course.status][1]': 'completed'
+        'filter[education_course.status][1]': 'active',
+        'filter[education_course.status][0]': 'completed'
       }
     })
     .then((response) => response.data.data)
@@ -126,8 +137,10 @@ export default {
   getCourses,
   getMyCourses,
   getCourse,
+  startCourse,
   getCourseLessons,
   getTests,
   submitTest,
-  getLesson
+  getLesson,
+  completeLesson
 }

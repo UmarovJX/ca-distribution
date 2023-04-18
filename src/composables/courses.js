@@ -1,22 +1,55 @@
 import { ref } from 'vue'
 import courses from '../services/courseService.js'
 import { useProgressStore } from '../stores/progress.js'
-export function useCourses() {
+
+export function useSearchCourses() {
   const searchedCourses = ref([])
+  const isSearching = ref(false)
+  const isEmptyResult = ref(false)
+  
   function search(str) {
-    courses.search(str).then((courses) => (searchedCourses.value = courses))
+    isEmptyResult.value = false
+    searchedCourses.value = []
+    isSearching.value = true
+    courses.search(str).then((courses) => {
+      isSearching.value = false
+      if (courses.length === 0) isEmptyResult.value = true
+      searchedCourses.value = courses
+      return
+    })
   }
 
-  const allCourses = ref([])
-  function getAll() {
-    courses.getCourses().then((courses) => (allCourses.value = courses))
+  function clearSearch() {
+    searchedCourses.value = []
+    isSearching.value = false
+    isEmptyResult.value = false
   }
 
-  const myCourses = ref([])
-  function getMyCourses() {
-    courses.getMyCourses().then((courses) => (myCourses.value = courses))
+  return {
+    isEmptyResult,
+    search,
+    searchedCourses,
+    isSearching,
+    clearSearch
+  }
+}
+
+export function useCourseList({ statusList = [] } = {}) {
+  const isLoading = ref(false)
+  const courseList = ref([])
+
+  function getCourses() {
+    isLoading.value = true
+    courses.getCourses({ statusList }).then((courses) => {
+      isLoading.value = false
+      courseList.value = courses
+    })
   }
 
+  return { isLoading, courseList, getCourses }
+}
+
+export function useCourses() {
   const course = ref(null)
   function getCourse(id) {
     courses.getCourse(id).then((data) => (course.value = data))
@@ -42,12 +75,6 @@ export function useCourses() {
   }
 
   return {
-    searchedCourses,
-    search,
-    allCourses,
-    getAll,
-    myCourses,
-    getMyCourses,
     course,
     getCourse,
     lessons,

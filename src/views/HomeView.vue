@@ -2,37 +2,26 @@
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import BaseInput from '../components/BaseInput.vue'
-import CourseCard from '../components/CourseCard.vue'
-import BasicLoader from '../components/BasicLoader.vue'
+import SearchResults from '../components/SearchResults.vue'
+import CourseList from '../components/CourseList.vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
-import { useCourses } from '../composables/courses'
 import { useRouter } from 'vue-router'
 import authService from '../services/authService'
-import { tg } from '../main'
+// import { tg } from '../main'
 const router = useRouter()
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
 authService.getUser()
-const search = ref('')
-
-const { allCourses, myCourses, getAll, getMyCourses } = useCourses()
-getAll()
-getMyCourses()
+const searchString = ref('')
 const settings = useSettingsStore()
-function seeAllMy() {
-  router.push({ name: 'mycourses' })
-}
-
 function clearSystem() {
   settings.clear()
   setTimeout(() => router.push({ name: 'signin' }), 0)
 }
-
-setTimeout(()=>{tg.showAlert(tg.initDataUnsafe.user.language_code)}, 2000)
 </script>
 
 <template>
@@ -50,7 +39,7 @@ setTimeout(()=>{tg.showAlert(tg.initDataUnsafe.user.language_code)}, 2000)
         </div>
       </div>
       <div class="inputdiv">
-        <base-input left v-model="search" type="text" :placeholder="t('searchCourse')"
+        <base-input left v-model="searchString" type="text" :placeholder="t('searchCourse')"
           ><svg
             width="24"
             height="24"
@@ -64,57 +53,14 @@ setTimeout(()=>{tg.showAlert(tg.initDataUnsafe.user.language_code)}, 2000)
         </base-input>
       </div>
     </app-header>
-    <main>
-      <BasicLoader></BasicLoader>
-      <div class="part">
-        <h2 class="section-header">{{ t('allCourses') }}</h2>
-        <span class="section-secondary">{{ t('viewAll') }}</span>
-      </div>
-      <div class="scroll-horizontal">
-        <course-card v-for="course in allCourses" :course="course" :key="course.id"></course-card>
-      </div>
-    </main>
-    <main>
-      <div class="part">
-        <h2 class="section-header">{{ t('allCourses') }}</h2>
-        <span class="section-secondary">{{ t('viewAll') }}</span>
-      </div>
-      <div class="scroll-horizontal">
-        <course-card v-for="course in allCourses" :course="course" :key="course.id"></course-card>
-      </div>
-
-      <div class="part">
-        <h2 class="section-header">{{ t('myCourses') }}</h2>
-        <span class="section-secondary" @click="seeAllMy">{{ t('viewAll') }}</span>
-      </div>
-      <div class="scroll-horizontal">
-        <course-card v-for="course in myCourses" :course="course" :key="course.id"></course-card>
-      </div>
-    </main>
+    <SearchResults :search-string="searchString"></SearchResults>
+    <CourseList :status-list="[]" :title="$t('allCourses')"></CourseList>
+    <CourseList :status-list="['active']" :title="$t('myCourses')"></CourseList>
     <AppFooter></AppFooter>
   </div>
 </template>
 
 <style>
-.scroll-horizontal {
-  overflow-x: scroll;
-  width: 100%;
-  padding-left: 20px;
-  display: flex;
-}
-.scroll-horizontal::-webkit-scrollbar {
-  display: none;
-}
-.scroll-horizontal .course-card {
-  margin-right: 20px;
-}
-.part {
-  display: flex;
-  justify-content: space-between;
-  padding: 40px 20px 20px 20px;
-  align-items: center;
-}
-
 .inputdiv {
   margin-bottom: 20px;
 }
