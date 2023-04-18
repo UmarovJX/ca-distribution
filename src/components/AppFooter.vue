@@ -41,6 +41,8 @@ const qrCodehandler = (data) => {
 const openScanner = () => {
   tg.showScanQrPopup({}, qrCodehandler)
 }
+
+
 </script>
 
 <template>

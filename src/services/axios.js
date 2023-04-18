@@ -30,8 +30,11 @@ instance.interceptors.response.use(
   },
   function (response) {
     const settings = useSettingsStore()
-    if (response.status === 401) settings.setToken('')
-    useRouter().push({ name: 'signin' })
+    if (response.status === 401) {
+      settings.setToken('')
+      useRouter().push({ name: 'signin' })
+    }
+    return Promise.reject(response)
   }
 )
 
