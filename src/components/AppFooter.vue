@@ -23,7 +23,8 @@ const isRatingPath = computed(() => {
 })
 
 const qrCodehandler = (data) => {
-  processCode(data).then((code) => (tg.closeScanQrPopup(), tg.showAlert(code)))
+  tg.closeScanQrPopup();
+  tg.showAlert(JSON.stringify(data))
 }
 const openScanner = () => {
   tg.showScanQrPopup({}, qrCodehandler)
