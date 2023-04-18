@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-//import { useScanner } from '../composables/qRCodeScanner'
+import { useScanner } from '../composables/qRCodeScanner'
 import { computed } from 'vue'
 import { tg } from '../main'
 const router = useRouter()
@@ -9,7 +9,7 @@ function goTo(name) {
   router.push({ name })
 }
 
-//const { isProcessingCode, processCode } = useScanner()
+const { isProcessingCode, processCode } = useScanner()
 
 const isCoursePath = computed(() => {
   if (route.path === '/') return true
@@ -22,8 +22,8 @@ const isRatingPath = computed(() => {
   return false
 })
 
-const qrCodehandler = () => {
-  tg.closeScanQrPopup()
+const qrCodehandler = (data) => {
+  processCode(data).then((code) => (tg.closeScanQrPopup(), tg.showAlert(code)))
 }
 const openScanner = () => {
   tg.showScanQrPopup({}, qrCodehandler)
