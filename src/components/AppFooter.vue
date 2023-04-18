@@ -1,11 +1,15 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
+//import { useScanner } from '../composables/qRCodeScanner'
 import { computed } from 'vue'
+import { tg } from '../main'
 const router = useRouter()
 const route = useRoute()
 function goTo(name) {
   router.push({ name })
 }
+
+//const { isProcessingCode, processCode } = useScanner()
 
 const isCoursePath = computed(() => {
   if (route.path === '/') return true
@@ -17,6 +21,13 @@ const isRatingPath = computed(() => {
   if (route.path.split('/')[1] === 'wallet') return true
   return false
 })
+
+const qrCodehandler = () => {
+  tg.closeScanQrPopup()
+}
+const openScanner = () => {
+  tg.showScanQrPopup({}, qrCodehandler)
+}
 </script>
 
 <template>
@@ -43,7 +54,7 @@ const isRatingPath = computed(() => {
       <p>{{ $t('study') }}</p>
     </div>
 
-    <div>
+    <div @click="openScanner">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -158,6 +169,4 @@ footer .active path {
   fill: #7061e1;
   stroke: var(--dark-element);
 }
-
-
 </style>

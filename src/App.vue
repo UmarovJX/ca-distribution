@@ -31,6 +31,7 @@ watch(
   () => route.fullPath,
   () => setBackBtn()
 )
+
 </script>
 
 <template>

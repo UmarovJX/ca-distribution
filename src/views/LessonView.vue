@@ -22,7 +22,10 @@ const lessonDuration = computed(() => {
   const minutes = lesson.value.duration_in_minutes % 60
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
-
+const videoId = ref('')
+const i = route.params.video.indexOf('?v=')
+if (~i) videoId.value = route.params.video.substring(i + 3, i + 14)
+console.log(videoId.value)
 const player = ref(null)
 const { instance, onStateChange } = usePlayer(route.params.video, player)
 onStateChange((event) => {
