@@ -35,7 +35,7 @@ const qrCodehandler = (data) => {
       .finally(() => {
         isProcessingCode.value = false
         tg.closeScanQrPopup()
-        tg.showAlert(JSON.stringify(codeResult.value))
+        tg.showAlert(JSON.stringify(codeResult.value.myRes))
       })
   }
 }
