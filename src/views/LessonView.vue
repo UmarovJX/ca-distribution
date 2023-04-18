@@ -50,7 +50,8 @@ watch(
 )
 watch(course, () => {
   if (!course.value.education_course) {
-    courseService.startCourse(route.params.id).catch(() => {
+    courseService.startCourse(route.params.id).catch((error) => {
+      tg.showAlert(error.status)
       tg.showAlert(t('courseStartFail'), () => router.go(-1))
     })
   }
