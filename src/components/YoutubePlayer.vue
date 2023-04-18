@@ -28,7 +28,6 @@ onReady(() => {
 function updateProgress() {
   const key = props.lessonId
   const val = (instance.value.getCurrentTime() / instance.value.getDuration()) * 100
-  console.log(val)
   if (!progress[key] || val > progress[key]) {
     setProgress(key, val)
   }

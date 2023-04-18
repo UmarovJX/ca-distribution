@@ -33,12 +33,21 @@ const lessonDuration = computed(() => {
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
 })
 const videoId = ref('')
-watch(lesson, () => {
+function setVideoId() {
   const i = lesson.value.video.indexOf('?v=')
-  if (~i) videoId.value = lesson.value.video.substring(i + 3, i + 14)
-  else videoId.value = lesson.value.video.substring(17)
-  console.log(videoId.value)
-})
+  let val
+  if (~i) val = lesson.value.video.substring(i + 3, i + 14)
+  else val = lesson.value.video.substring(17)
+  videoId.value = ''
+  setTimeout(() => (videoId.value = val), 0)
+}
+watch(lesson, setVideoId)
+watch(
+  () => route.params.lessonid,
+  () => {
+    getLesson(route.params.lessonid)
+  }
+)
 watch(course, () => {
   if (!course.value.education_course) {
     courseService.startCourse(route.params.id).catch(() => {
@@ -47,19 +56,29 @@ watch(course, () => {
   }
 })
 
-courseService.startCourse(route.params.id).catch(() => {
-  tg.showAlert(t('courseStartFail'), () => router.go(-1))
-})
+const lessonId = computed(() => route.params.lessonid)
 
-function handleLessonFinish() {}
+function handleLessonFinish() {
+  courseService
+    .completeLesson(route.params.lessonid)
+    .then(() => {
+      const ls = lessons.value.map((el) => el)
+      const l = lessons.value.find((el) => el.id === +route.params.lessonid)
+      l.is_completed = true
+      lessons.value = ls
+    })
+    .catch(() => {
+      tg.showAlert(t('courseStartFail'), () => router.go(-1))
+    })
+}
 </script>
 <template>
   <div class="mh-100">
     <YoutubePlayer
-      :key="videoId"
+      :key="route.path"
       :video-id="videoId"
-      :lesson-id="lesson.id"
-      v-if="lesson"
+      :lesson-id="lessonId"
+      v-if="videoId"
       @duration="duration = $event"
       @finish="handleLessonFinish"
     ></YoutubePlayer>
