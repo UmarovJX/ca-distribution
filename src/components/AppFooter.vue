@@ -9,7 +9,7 @@ function goTo(name) {
   router.push({ name })
 }
 
-const { isProcessingCode, processCode } = useScanner()
+const { isProcessingCode, processCode, codeResult } = useScanner()
 
 const isCoursePath = computed(() => {
   if (route.path === '/') return true
@@ -27,22 +27,21 @@ const qrCodehandler = (data) => {
     isProcessingCode.value = true
     processCode(data)
       .then((data) => {
-        tg.showAlert(JSON.stringify({ myRes: 'success', ...data }))
+        codeResult.value = { myRes: 'success', ...data }
       })
       .catch((data) => {
-        tg.showAlert(JSON.stringify({ myRes: 'error', ...data }))
+        codeResult.value = { myRes: 'error', ...data }
       })
       .finally(() => {
         isProcessingCode.value = false
         tg.closeScanQrPopup()
+        tg.showAlert(JSON.stringify(codeResult.value))
       })
   }
 }
 const openScanner = () => {
   tg.showScanQrPopup({}, qrCodehandler)
 }
-
-
 </script>
 
 <template>
