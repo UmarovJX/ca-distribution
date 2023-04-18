@@ -3,12 +3,14 @@ import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import BaseInput from '../components/BaseInput.vue'
 import CourseCard from '../components/CourseCard.vue'
+import BasicLoader from '../components/BasicLoader.vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import { useCourses } from '../composables/courses'
 import { useRouter } from 'vue-router'
 import authService from '../services/authService'
+import { tg } from '../main'
 const router = useRouter()
 const { t } = useI18n({
   inheritLocale: true,
@@ -29,6 +31,8 @@ function clearSystem() {
   settings.clear()
   setTimeout(() => router.push({ name: 'signin' }), 0)
 }
+
+setTimeout(()=>{tg.showAlert(tg.initDataUnsafe.user.language_code)}, 2000)
 </script>
 
 <template>
@@ -60,6 +64,16 @@ function clearSystem() {
         </base-input>
       </div>
     </app-header>
+    <main>
+      <BasicLoader></BasicLoader>
+      <div class="part">
+        <h2 class="section-header">{{ t('allCourses') }}</h2>
+        <span class="section-secondary">{{ t('viewAll') }}</span>
+      </div>
+      <div class="scroll-horizontal">
+        <course-card v-for="course in allCourses" :course="course" :key="course.id"></course-card>
+      </div>
+    </main>
     <main>
       <div class="part">
         <h2 class="section-header">{{ t('allCourses') }}</h2>

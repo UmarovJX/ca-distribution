@@ -6,6 +6,13 @@ function getCourse(id) {
   return axios.get(courseURL + `/${id}`).then((response) => response.data)
 }
 
+function search(text) {
+  return axios
+    .get(courseURL, { params: { 'filter[name]': text } })
+    .then((response) => response.data.data)
+}
+search('course')
+
 function getCourses() {
   return axios.get(courseURL).then((response) => response.data.data)
 }
@@ -115,6 +122,7 @@ function submitTest(data) {
   }
 }
 export default {
+  search,
   getCourses,
   getMyCourses,
   getCourse,

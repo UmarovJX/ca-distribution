@@ -2,6 +2,11 @@ import { ref } from 'vue'
 import courses from '../services/courseService.js'
 import { useProgressStore } from '../stores/progress.js'
 export function useCourses() {
+  const searchedCourses = ref([])
+  function search(str) {
+    courses.search(str).then((courses) => (searchedCourses.value = courses))
+  }
+
   const allCourses = ref([])
   function getAll() {
     courses.getCourses().then((courses) => (allCourses.value = courses))
@@ -37,6 +42,8 @@ export function useCourses() {
   }
 
   return {
+    searchedCourses,
+    search,
     allCourses,
     getAll,
     myCourses,

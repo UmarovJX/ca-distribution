@@ -38,6 +38,7 @@ body {
 
 .auth input {
   background-color: var(--auth-input-bg);
+  color: var(--text-color-main);
 }
 
 .title {

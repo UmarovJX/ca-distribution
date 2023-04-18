@@ -81,9 +81,21 @@ i {
   border: 1px solid var(--color-outline);
   border-radius: 20px;
 }
+.dark .input {
+  color: var(--violet);
+}
+@media (prefers-color-scheme: dark) {
+  .input {
+    color: var(--violet);
+  }
+}
 
 .input::placeholder {
   font-size: 16px;
   color: var(--placeholder-color);
+}
+.auth input {
+  background-color: var(--auth-input-bg);
+  color: var(--text-color-main);
 }
 </style>
