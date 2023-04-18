@@ -42,6 +42,21 @@ const qrCodehandler = (data) => {
 const openScanner = () => {
   tg.showScanQrPopup({}, qrCodehandler)
 }
+// const openScanner = () => {
+//   processCode('qwe')
+//     .then((data) => {
+//       codeResult.value = { myRes: 'success', ...data }
+//     })
+//     .catch((data) => {
+//       codeResult.value = { myRes: 'error', ...data }
+//     })
+//     .finally(() => {
+//       isProcessingCode.value = false
+//       // tg.closeScanQrPopup()
+//       // tg.showAlert(JSON.stringify(codeResult.value))
+//       console.log(JSON.stringify(codeResult.value))
+//     })
+// }
 </script>
 
 <template>

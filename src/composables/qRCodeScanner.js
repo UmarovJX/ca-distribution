@@ -5,7 +5,7 @@ export function useScanner() {
   const isProcessingCode = ref(false)
   const codeResult = ref()
   function processCode(data) {
-    return QRCodeScanner.submitQRCodeString(data)
+    return QRCodeScanner.submitQRCodeString(data).catch((error) => Promise.reject(error.response))
   }
 
   return {
