@@ -1,28 +1,13 @@
 <script setup>
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
-import CourseCard from '../components/CourseCard.vue'
-import CoursePanel from '../components/CoursePanel.vue'
-
-import { computed } from 'vue'
+import CourseList from '../components/CourseList.vue'
+import FinishedCoursesList from '../components/FinishedCoursesList.vue'
 import { useI18n } from 'vue-i18n'
-import { useCourses } from '../composables/courses'
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
 })
-
-const { myCourses, getMyCourses } = useCourses()
-getMyCourses()
-
-const activeCourses = computed(() => {
-  return myCourses.value.filter((course) => course.education_course.status === 'active')
-})
-const finishedCourses = computed(() =>
-  myCourses.value.filter((course) => course.education_course.status === 'completed')
-)
-finishedCourses
-//---TO DO ---> edit finished Courses section
 </script>
 
 <template>
@@ -37,52 +22,14 @@ finishedCourses
         </div>
       </app-header>
 
-      <div class="part">
-        <h2 class="section-header">{{ t('activeCourses') }}</h2>
-      </div>
-      <div class="scroll-horizontal">
-        <course-card
-          v-for="course in activeCourses"
-          :course="course"
-          :key="course.id"
-          :description="'progress'"
-          vertical
-        ></course-card>
-      </div>
-      <div class="part">
-        <h2 class="section-header">{{ t('finishedCourses') }}</h2>
-      </div>
-      <div class="container">
-        <CoursePanel
-          v-for="course in activeCourses"
-          :course="course"
-          :key="course.id"
-        ></CoursePanel>
-      </div>
+      <CourseList :status-list="['active']" vertical :title="$t('activeCourses')"></CourseList>
+      <FinishedCoursesList></FinishedCoursesList>
     </main>
     <AppFooter></AppFooter>
   </div>
 </template>
 
 <style>
-.scroll-horizontal {
-  overflow-x: scroll;
-  width: 100%;
-  padding-left: 20px;
-  display: flex;
-}
-.scroll-horizontal::-webkit-scrollbar {
-  display: none;
-}
-.scroll-horizontal .course-card {
-  margin-right: 20px;
-}
-.part {
-  display: flex;
-  justify-content: space-between;
-  padding: 40px 20px 20px 20px;
-  align-items: center;
-}
 .part .right {
   text-align: right;
 }

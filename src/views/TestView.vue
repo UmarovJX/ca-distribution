@@ -23,29 +23,29 @@
       </div>
 
       <div v-if="testState === 'result'">
-        <TestResult :result="testResult"></TestResult>
+        <TestResult :result="testResult" v-if="testResult"></TestResult>
       </div>
       <div class="flex mt-70">
         <button
           v-if="testState == 'view'"
           @click="submitTest"
-          class="typo600_16  mt-40"
-          :disabled="!(answers.length == tests.length) || loading"
+          class="typo600_16 mt-40"
+          :disabled="!(answers.length == tests.length) && !loading"
         >
           {{ $t('submitTest') }}
         </button>
         <button
           :class="testResult.is_passed ? '' : 'mr-20'"
-          v-if="testState == 'result'"
+          v-if="testState == 'result' && testResult"
           @click="goMyCourses"
-          class="typo600_16  mt-40"
+          class="typo600_16 mt-40"
         >
           {{ $t('myCourses') }}
         </button>
         <button
-          v-if="testState == 'result' && !testResult.is_passed"
+          v-if="testResult && testState == 'result' && !testResult.is_passed"
           @click="initPage"
-          class="typo600_16  mt-40"
+          class="typo600_16 mt-40"
         >
           {{ $t('restart') }}
         </button>
@@ -74,7 +74,7 @@ const router = useRouter()
 const testState = ref('view')
 const loading = ref(false)
 const answers = ref([])
-const testResult = ref()
+const testResult = ref(null)
 
 function initPage() {
   testState.value = 'view'
@@ -84,7 +84,10 @@ function initPage() {
   course.value = null
   tests.value = []
   getCourse(route.params.id)
-  getTests(route.params.id)
+  getTests(route.params.id).catch((e) => {
+    alert(e.msg)
+    router.push({ name: 'course', params: { id: route.params.id } })
+  })
 }
 
 initPage()
@@ -96,10 +99,17 @@ function handle(newId, oldId) {
 }
 
 function submitTest() {
-  courseService.submitTest(answers).then(({ meta }) => {
-    testResult.value = meta
-    setTimeout(() => (testState.value = 'result'))
-  })
+  courseService
+    .submitTest(answers.value, route.params.id)
+    .then((data) => {
+      console.log(data)
+      testResult.value = data.meta
+      setTimeout(() => (testState.value = 'result'))
+    })
+    .catch(({ data }) => {
+      alert(JSON.stringify(data))
+      router.push({ name: 'course', params: { id: route.params.id } })
+    })
 }
 
 function goMyCourses() {

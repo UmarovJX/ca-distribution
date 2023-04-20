@@ -35,7 +35,7 @@ function updateProgress() {
 onStateChange((event) => {
   if (event.data === 1 || event.data === 2) {
     updateProgress()
-    if (event.data === 1) interval.value = setInterval(updateProgress, 1000)
+    if (event.data === 1) interval.value = setInterval(updateProgress, 10000)
     else clearInterval(interval.value)
   }
 

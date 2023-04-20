@@ -1,67 +1,87 @@
 import { ref } from 'vue'
 import courses from '../services/courseService.js'
-import { useProgressStore } from '../stores/progress.js'
 
-export function useSearchCourses() {
-  const searchedCourses = ref([])
-  const isSearching = ref(false)
+export function usePagination() {
+  const isLoading = ref(false)
+  const list = ref([])
+  const page = ref(1)
+  const hasNextPage = ref(false)
+
+  return { isLoading, list, page, hasNextPage }
+}
+export function useSearchCourses(text) {
+  const { isLoading, list, page, hasNextPage } = usePagination()
   const isEmptyResult = ref(false)
-  
-  function search(str) {
+
+  function search() {
     isEmptyResult.value = false
-    searchedCourses.value = []
-    isSearching.value = true
-    courses.search(str).then((courses) => {
-      isSearching.value = false
-      if (courses.length === 0) isEmptyResult.value = true
-      searchedCourses.value = courses
-      return
+    isLoading.value = true
+    const options = { text, page: page.value }
+    courses.search(options).then((data) => {
+      isLoading.value = false
+      if (data.data.length === 0 && page.value === 1) return (isEmptyResult.value = true)
+      list.value.push(...data.data)
+      page.value++
+      hasNextPage.value = !!data.links.next
     })
   }
 
+  search()
+
   function clearSearch() {
-    searchedCourses.value = []
-    isSearching.value = false
+    list.value = []
+    isLoading.value = false
     isEmptyResult.value = false
   }
-
   return {
     isEmptyResult,
     search,
-    searchedCourses,
-    isSearching,
-    clearSearch
+    courseList: list,
+    isLoading,
+    clearSearch,
+    hasNextPage
   }
 }
 
 export function useCourseList({ statusList = [] } = {}) {
-  const isLoading = ref(false)
-  const courseList = ref([])
+  const { isLoading, list, page, hasNextPage } = usePagination()
 
   function getCourses() {
     isLoading.value = true
-    courses.getCourses({ statusList }).then((courses) => {
+    const params = { statusList, page: page.value }
+    courses.getCourses(params).then((data) => {
       isLoading.value = false
-      courseList.value = courses
+      list.value.push(...data.data)
+      page.value++
+      hasNextPage.value = !!data.links.next
     })
   }
+  getCourses()
 
-  return { isLoading, courseList, getCourses }
+  return { isLoading, courseList: list, getCourses, hasNextPage }
+}
+
+export function useLessonList(courseId) {
+  const { isLoading, list, page, hasNextPage } = usePagination()
+
+  function getLessons() {
+    isLoading.value = true
+    courses.getCourseLessons(courseId, page.value).then((data) => {
+      isLoading.value = false
+      list.value.push(...data.data)
+      page.value++
+      hasNextPage.value = !!data.links.next
+    })
+  }
+  getLessons()
+
+  return { isLoading, lessonList: list, getLessons, hasNextPage }
 }
 
 export function useCourses() {
   const course = ref(null)
   function getCourse(id) {
     courses.getCourse(id).then((data) => (course.value = data))
-  }
-
-  const lessons = ref([])
-  function getCourseLessons(courseId) {
-    courses.getCourseLessons(courseId).then((data) => (lessons.value = data))
-    const { deleteProgress } = useProgressStore()
-    lessons.value.forEach((lesson) => {
-      if (lesson.is_completed) deleteProgress(lesson.id + lesson.video)
-    })
   }
 
   const lesson = ref(null)
@@ -71,14 +91,15 @@ export function useCourses() {
 
   const tests = ref([])
   function getTests(courseId) {
-    courses.getTests(courseId).then((data) => (tests.value = data))
+    return courses.getTests(courseId).then((data) => {
+      if (data.R !== 'E') return (tests.value = data)
+      return Promise.reject(data.msg)
+    })
   }
 
   return {
     course,
     getCourse,
-    lessons,
-    getCourseLessons,
     tests,
     getTests,
     lesson,

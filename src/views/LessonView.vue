@@ -20,9 +20,8 @@ const { t } = useI18n({
 const settings = useSettingsStore()
 const route = useRoute()
 
-const { course, getCourse, lessons, getCourseLessons, lesson, getLesson } = useCourses()
+const { course, getCourse, lesson, getLesson } = useCourses()
 getCourse(route.params.id)
-getCourseLessons(route.params.id)
 getLesson(route.params.lessonid)
 
 const duration = ref(0)
@@ -44,8 +43,8 @@ function setVideoId() {
 watch(lesson, setVideoId)
 watch(
   () => route.params.lessonid,
-  () => {
-    getLesson(route.params.lessonid)
+  (val) => {
+    if (val) getLesson(route.params.lessonid)
   }
 )
 watch(course, () => {
@@ -57,20 +56,16 @@ watch(course, () => {
   }
 })
 
+const leftAttempts = computed(() => {
+  if (!course.value) return 0
+  return course.value.education_course.testing_attempts_left
+})
+
 const lessonId = computed(() => route.params.lessonid)
 
+const finishedLesson = ref(0)
 function handleLessonFinish() {
-  courseService
-    .completeLesson(route.params.lessonid)
-    .then(() => {
-      const ls = lessons.value.map((el) => el)
-      const l = lessons.value.find((el) => el.id === +route.params.lessonid)
-      l.is_completed = true
-      lessons.value = ls
-    })
-    .catch(() => {
-      tg.showAlert(t('courseStartFail'), () => router.go(-1))
-    })
+  finishedLesson.value = route.params.lessonid
 }
 </script>
 <template>
@@ -108,7 +103,11 @@ function handleLessonFinish() {
         <span class="typo600_12">{{ lessonDuration }}</span>
       </div>
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
-      <LessonList :lessons="lessons"></LessonList>
+      <LessonList
+        :course-id="route.params.id"
+        :attempts="leftAttempts"
+        :finished-lesson="finishedLesson"
+      ></LessonList>
     </div>
     <AppFooter></AppFooter>
   </div>

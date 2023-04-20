@@ -7,40 +7,9 @@ import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
 import authService from '../services/authService'
-import { ref } from 'vue'
 import WalletPanel from '../components/WalletPanel.vue'
-const data = ref([
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Оплачено',
-    amount: 10
-  },
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Оплачено',
-    amount: 10
-  },
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Оплачено',
-    amount: 10
-  },
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Не оплачено',
-    amount: 10
-  },
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Не оплачено',
-    amount: 10
-  }
-])
+import { useTransactionList } from '../composables/transactions'
+const { transactionList } = useTransactionList()
 
 const router = useRouter()
 const { t } = useI18n({
@@ -76,7 +45,7 @@ function clearSystem() {
       <div class="container mt-40">
         <h2 class="section-header">{{ t('wallet.settlement') }}</h2>
         <div class="wallet_list mt-20">
-          <WalletPanel v-for="(entry, i) in data" :entry="entry" :key="i"></WalletPanel>
+          <WalletPanel v-for="(entry, i) in transactionList" :entry="entry" :key="i"></WalletPanel>
         </div>
         <WAlletStats></WAlletStats>
       </div>

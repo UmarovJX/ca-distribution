@@ -50,4 +50,13 @@ watch(
 .fade-leave-to {
   opacity: 0;
 }
+
+.fade2-enter-active,
+.fade2-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade2-enter-from,
+.fade2-leave-to {
+  opacity: 0;
+}
 </style>

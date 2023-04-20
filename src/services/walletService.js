@@ -1,11 +1,12 @@
 import axios from './axios'
-const wallet url = 'telegram/batch/course'
+const walletURL = 'telegram/user/transaction'
 
-function getCourse(id) {
-  return axios.get(courseURL + `/${id}`).then((response) => response.data)
+function getTransactions({ tType, page }) {
+  const params = { page }
+  params['page-size'] = 1
+
+  if (tType) params['filter[type]'] = tType
+  return axios.get(walletURL, params).then((response) => response.data)
 }
 
-
-export default {
-
-}
+export default { getTransactions }

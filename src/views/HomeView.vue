@@ -4,11 +4,12 @@ import AppFooter from '../components/AppFooter.vue'
 import BaseInput from '../components/BaseInput.vue'
 import SearchResults from '../components/SearchResults.vue'
 import CourseList from '../components/CourseList.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
 import authService from '../services/authService'
+import debounce from '../utils/debounce'
 // import { tg } from '../main'
 const router = useRouter()
 const { t } = useI18n({
@@ -16,12 +17,19 @@ const { t } = useI18n({
   useScope: 'local'
 })
 authService.getUser()
-const searchString = ref('')
+const inp = ref('')
 const settings = useSettingsStore()
 function clearSystem() {
   settings.clear()
   setTimeout(() => router.push({ name: 'signin' }), 0)
 }
+const searchString = ref('')
+watch(
+  inp,
+  debounce((val) => {
+    searchString.value = val
+  }, 400)
+)
 </script>
 
 <template>
@@ -39,7 +47,7 @@ function clearSystem() {
         </div>
       </div>
       <div class="inputdiv">
-        <base-input left v-model="searchString" type="text" :placeholder="t('searchCourse')"
+        <base-input left v-model="inp" type="text" :placeholder="t('searchCourse')"
           ><svg
             width="24"
             height="24"
@@ -53,14 +61,26 @@ function clearSystem() {
         </base-input>
       </div>
     </app-header>
-    <SearchResults :search-string="searchString"></SearchResults>
+    <div class="searchResultContainer">
+      <transition name="fade2" mode="out-in">
+        <SearchResults
+          :search-string="searchString"
+          v-if="searchString.length > 2"
+          :key="searchString"
+        ></SearchResults>
+      </transition>
+    </div>
+
     <CourseList :status-list="[]" :title="$t('allCourses')"></CourseList>
-    <CourseList :status-list="['active']" :title="$t('myCourses')"></CourseList>
+    <CourseList :status-list="['active']" :title="$t('myCourses')" :link="{name: 'mycourses'}"></CourseList>
     <AppFooter></AppFooter>
   </div>
 </template>
 
 <style>
+.searchResultContainer {
+  transition: max-height 1s linear;
+}
 .inputdiv {
   margin-bottom: 20px;
 }

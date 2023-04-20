@@ -6,7 +6,7 @@ import { useProgressStore } from '../stores/progress'
 import { computed } from 'vue'
 
 const settings = useSettingsStore()
-const { progress } = useProgressStore()
+const { progress, deleteProgress } = useProgressStore()
 const router = useRouter()
 const props = defineProps({
   isAvailable: {
@@ -19,6 +19,7 @@ const props = defineProps({
   lesson: { type: Object }
 })
 const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
+if (!props.lesson.is_completed && progress[props.lesson.id] === 100) deleteProgress(props.lesson.id)
 const progressValue = computed(() => {
   const key = props.lesson.id
   if (props.lesson.is_completed) return 100

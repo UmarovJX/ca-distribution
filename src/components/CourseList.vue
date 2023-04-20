@@ -1,13 +1,19 @@
 <template>
   <div class="part">
     <h2 class="section-header">{{ props.title }}</h2>
-    <span class="section-secondary">{{ $t('viewAll') }}</span>
+    <span class="section-secondary" v-if="props.link" @click="goTo">{{ $t('viewAll') }}</span>
   </div>
   <div class="scroll-horizontal">
-    <course-card v-for="course in courseList" :course="course" :key="course.id"></course-card>
+    <course-card
+      v-for="course in courseList"
+      :course="course"
+      :key="course.id"
+      :vertical="props.vertical"
+    ></course-card>
     <div :style="{ flexGrow: '1' }" v-if="isLoading">
       <BasicLoader></BasicLoader>
     </div>
+    <div v-intersection-observer="onIntersectionObserver" v-if="!isLoading && hasNextPage"></div>
   </div>
 </template>
 
@@ -15,13 +21,25 @@
 import CourseCard from './CourseCard.vue'
 import BasicLoader from './BasicLoader.vue'
 import { useCourseList } from '../composables/courses'
-
+import { vIntersectionObserver } from '@vueuse/components'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const props = defineProps({
   statusList: { type: Array, default: () => [] },
-  title: { type: String, required: true }
+  title: { type: String, required: true },
+  vertical: { type: Boolean, default: false },
+  link: { type: Object, default: null }
 })
-const { isLoading, courseList, getCourses } = useCourseList({ statusList: props.statusList })
-getCourses()
+const { isLoading, courseList, getCourses, hasNextPage } = useCourseList({
+  statusList: props.statusList
+})
+
+function onIntersectionObserver([{ isIntersecting }]) {
+  if (isIntersecting) getCourses()
+}
+function goTo() {
+  router.push(props.link)
+}
 </script>
 
 <style>

@@ -8,18 +8,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <div
-    class="wallet_panel"
-    @click="handleClick"
-    :class="{ panel_disabled: props.entry.status !== 'Оплачено' }"
-  >
+  <div class="wallet_panel">
     <div>
-      <div class="typo600_12 hint_text">{{ props.entry.date }}</div>
-      <div class="typo700_14 mt-5">{{ props.entry.name }}</div>
+      <div class="typo600_12 hint_text">{{ props.entry.created_at }}</div>
+      <div class="typo700_14 mt-5">{{ props.entry.text }}</div>
       <div class="mt-5 flex">
         <svg
           class="mr-12"
-          v-if="props.entry.status === 'Оплачено'"
           width="15"
           height="15"
           viewBox="0 0 15 15"
@@ -42,7 +37,7 @@ const props = defineProps({
           </defs>
         </svg>
 
-        <svg
+        <!-- <svg
           class="mr-12"
           v-else
           width="15"
@@ -64,8 +59,8 @@ const props = defineProps({
               <rect width="15" height="15" fill="white" />
             </clipPath>
           </defs>
-        </svg>
-        <span class="typo400_12"> {{ props.entry.status }}</span>
+        </svg> -->
+        <span class="typo400_12"> Оплачено</span>
       </div>
     </div>
     <div class="badge typo600_12">{{ $t('wallet.ball') }}: {{ props.entry.amount }}</div>

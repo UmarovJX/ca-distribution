@@ -1,29 +1,16 @@
 <script setup>
 import WalletHeader from '../components/WalletHeader.vue'
-import * as d3 from 'd3'
+// import * as d3 from 'd3'
 
 import AppFooter from '../components/AppFooter.vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
 import authService from '../services/authService'
-import { ref } from 'vue'
 import WalletPanel from '../components/WalletPanel.vue'
-window.d3 = d3
+import { useTransactionList } from '../composables/transactions'
+// window.d3 = d3
 
-const datas = ref([
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Оплачено',
-    amount: 10
-  },
-  {
-    date: '01.02.2023',
-    name: 'HP Envy x360',
-    status: 'Оплачено',
-    amount: 10
-  }
-])
+const { transactionList } = useTransactionList('payoff')
 
 const { t } = useI18n({
   inheritLocale: true,
@@ -188,7 +175,7 @@ const settings = useSettingsStore()
         </svg>
 
         <div class="wallet_list mt-40">
-          <WalletPanel v-for="(entry, i) in datas" :entry="entry" :key="i"></WalletPanel>
+          <WalletPanel v-for="(entry, i) in transactionList" :entry="entry" :key="i"></WalletPanel>
         </div>
       </div>
     </main>

@@ -6,19 +6,22 @@ import { useRoute } from 'vue-router'
 import LessonList from '../components/LessonList.vue'
 import { useSettingsStore } from '../stores/settings'
 import { useCourses } from '../composables/courses'
-//import { usePlayer } from '@vue-youtube/core'
 const settings = useSettingsStore()
 const route = useRoute()
 
-const { course, getCourse, lessons, getCourseLessons } = useCourses()
+const { course, getCourse } = useCourses()
 getCourse(route.params.id)
-getCourseLessons(route.params.id)
 
 const course_duration = computed(() => {
   const hours = Math.floor(course.value.duration_in_minutes / 60)
   const minutes = course.value.duration_in_minutes % 60
 
   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
+})
+
+const leftAttempts = computed(() => {
+  if (!course.value) return 0
+  return course.value.education_course.testing_attempts_left
 })
 </script>
 <template>
@@ -52,7 +55,7 @@ const course_duration = computed(() => {
         <span class="typo600_12">{{ course_duration }}</span>
       </div>
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
-      <LessonList :lessons="lessons"></LessonList>
+      <LessonList :course-id="route.params.id" :attempts="leftAttempts"></LessonList>
     </div>
     <AppFooter></AppFooter>
   </div>
