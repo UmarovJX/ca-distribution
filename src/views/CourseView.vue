@@ -55,7 +55,11 @@ const leftAttempts = computed(() => {
         <span class="typo600_12">{{ course_duration }}</span>
       </div>
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
-      <LessonList :course-id="route.params.id" :attempts="leftAttempts"></LessonList>
+      <LessonList
+        :course-id="route.params.id"
+        :attempts="leftAttempts"
+        :is-completed="course.education_course.status === 'completed'"
+      ></LessonList>
     </div>
     <AppFooter></AppFooter>
   </div>

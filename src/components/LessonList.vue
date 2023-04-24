@@ -39,6 +39,10 @@ const props = defineProps({
   },
   finishedLesson: {
     type: Number
+  },
+  isCompleted: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -49,7 +53,11 @@ function startTest() {
 }
 
 const isTestAvailable = computed(
-  () => !hasNextPage.value && lessonList.value.every((el) => el.is_completed) && props.attempts
+  () =>
+    !hasNextPage.value &&
+    lessonList.value.every((el) => el.is_completed) &&
+    props.attempts &&
+    !props.isCompleted
 )
 function onIntersectionObserver([{ isIntersecting }]) {
   if (isIntersecting) getLessons()

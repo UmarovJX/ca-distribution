@@ -107,6 +107,7 @@ function handleLessonFinish() {
         :course-id="route.params.id"
         :attempts="leftAttempts"
         :finished-lesson="finishedLesson"
+        :is-completed="course.education_course.status==='completed'"
       ></LessonList>
     </div>
     <AppFooter></AppFooter>
