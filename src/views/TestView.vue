@@ -43,7 +43,7 @@
           {{ $t('myCourses') }}
         </button>
         <button
-          v-if="testResult && testState == 'result' && !testResult.is_passed"
+          v-if="testResult && testState == 'result' && !testResult.is_passed && course.education_course.testing_attempts_left>1"
           @click="initPage"
           class="typo600_16 mt-40"
         >
@@ -66,6 +66,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useSettingsStore } from '../stores/settings'
 import { useCourses } from '../composables/courses'
 import courseService from '../services/courseService'
+import { tg } from '../main'
 
 const { course, getCourse, tests, getTests } = useCourses()
 const settings = useSettingsStore()
@@ -85,7 +86,7 @@ function initPage() {
   tests.value = []
   getCourse(route.params.id)
   getTests(route.params.id).catch((e) => {
-    alert(e.msg)
+    tg.showAlert(e.msg)
     router.push({ name: 'course', params: { id: route.params.id } })
   })
 }

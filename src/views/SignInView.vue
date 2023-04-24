@@ -4,13 +4,17 @@ import BaseInput from '../components/BaseInput.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import authService from '../services/authService'
+import { tg } from '../main'
 const router = useRouter()
-function goToRegister() {
-  router.push({ name: 'register' })
-}
+// function goToRegister() {
+//   router.push({ name: 'register' })
+// }
 
 function handleForm() {
-  authService.signIn(username.value, password.value).then(() => router.push({ name: 'home' }))
+  authService
+    .signIn(username.value, password.value)
+    .then(() => router.push({ name: 'home' }))
+    .catch((e) => tg.showAlert(e.msg))
 }
 const username = ref('')
 const password = ref('')
@@ -59,8 +63,8 @@ function toggleType() {
     </div>
 
     <footer>
-      <p class="prompt">{{ $t('noAccount') }}</p>
-      <button @click="goToRegister">{{ $t('register') }}</button>
+      <!-- <p class="prompt">{{ $t('noAccount') }}</p>
+      <button @click="goToRegister">{{ $t('register') }}</button> -->
     </footer>
   </div>
 </template>
