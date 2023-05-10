@@ -98,13 +98,13 @@ const settings = useSettingsStore()
         <div>
           <div class="secondary typo400_14">{{ t('balls') }}</div>
 
-          <div class="balls" @click="clearSystem">{{ settings.user.balance }}</div>
+          <div class="balls">{{ settings.user.balance }}</div>
         </div>
       </div>
     </wallet-header>
     <main>
       <div class="container mt-40">
-        <svg
+        <!-- <svg
           class="chart"
           width="350"
           height="240"
@@ -172,7 +172,7 @@ const settings = useSettingsStore()
               <stop offset="1" stop-color="#0181FA" />
             </linearGradient>
           </defs>
-        </svg>
+        </svg> -->
 
         <div class="wallet_list mt-40">
           <WalletPanel v-for="(entry, i) in transactionList" :entry="entry" :key="i"></WalletPanel>

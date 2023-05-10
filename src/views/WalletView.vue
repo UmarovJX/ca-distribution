@@ -5,13 +5,11 @@ import WAlletStats from '../components/WAlletStats.vue'
 import AppFooter from '../components/AppFooter.vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '../stores/settings'
-import { useRouter } from 'vue-router'
 import authService from '../services/authService'
 import WalletPanel from '../components/WalletPanel.vue'
 import { useTransactionList } from '../composables/transactions'
 const { transactionList } = useTransactionList()
 
-const router = useRouter()
 const { t } = useI18n({
   inheritLocale: true,
   useScope: 'local'
@@ -20,10 +18,7 @@ authService.getUser()
 
 const settings = useSettingsStore()
 
-function clearSystem() {
-  settings.clear()
-  setTimeout(() => router.push({ name: 'signin' }), 0)
-}
+
 </script>
 
 <template>
@@ -37,7 +32,7 @@ function clearSystem() {
         <div>
           <div class="secondary typo400_14">{{ t('balls') }}</div>
 
-          <div class="balls" @click="clearSystem">{{ settings.user.balance }}</div>
+          <div class="balls">{{ settings.user.balance }}</div>
         </div>
       </div>
     </wallet-header>

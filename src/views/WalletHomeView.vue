@@ -34,9 +34,24 @@ const goToWalletHistory = () => router.push({ name: 'wallethistory' })
           <h1 class="title">{{ settings.user.full_name }}</h1>
           <p class="secondary typo400_14">{{ $t('wallet.home_sub_header') }}</p>
         </div>
-        <div>
-          <div class="secondary typo400_14">{{ t('balls') }}</div>
-          <div class="balls typo400_14" @click="clearSystem">{{ settings.user.balance }}</div>
+        <div class="exit-icon">
+          <svg
+            @click="clearSystem"
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-log-out"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
         </div>
       </div>
     </wallet-header>
@@ -58,6 +73,10 @@ const goToWalletHistory = () => router.push({ name: 'wallethistory' })
 </template>
 
 <style>
+.exit-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
 .wallet_img {
   width: 100%;
   aspect-ratio: 70 / 51;
@@ -65,8 +84,6 @@ const goToWalletHistory = () => router.push({ name: 'wallethistory' })
   background-position: center;
   border-radius: 30px;
 }
-
-
 
 .balls {
   padding: 12px 15px;

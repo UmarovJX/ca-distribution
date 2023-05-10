@@ -6,10 +6,12 @@ import SearchResults from '../components/SearchResults.vue'
 import CourseList from '../components/CourseList.vue'
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useSettingsStore } from '../stores/settings'
 import { useRouter } from 'vue-router'
 import authService from '../services/authService'
 import debounce from '../utils/debounce'
+import { useSettingsStore } from '../stores/settings'
+const settings = useSettingsStore()
+
 // import { tg } from '../main'
 const router = useRouter()
 const { t } = useI18n({
@@ -18,10 +20,8 @@ const { t } = useI18n({
 })
 authService.getUser()
 const inp = ref('')
-const settings = useSettingsStore()
-function clearSystem() {
-  settings.clear()
-  setTimeout(() => router.push({ name: 'signin' }), 0)
+const goWallet = () => {
+  router.push({ name: 'wallethome' })
 }
 const searchString = ref('')
 watch(
@@ -43,7 +43,7 @@ watch(
         <div>
           <div class="secondary typo400_14">{{ t('balls') }}</div>
 
-          <div class="balls" @click="clearSystem">{{ settings.user.balance }}</div>
+          <div class="balls" @click="goWallet">{{ settings.user.balance }}</div>
         </div>
       </div>
       <div class="inputdiv">
@@ -72,7 +72,11 @@ watch(
     </div>
 
     <CourseList :status-list="[]" :title="$t('allCourses')"></CourseList>
-    <CourseList :status-list="['active']" :title="$t('myCourses')" :link="{name: 'mycourses'}"></CourseList>
+    <CourseList
+      :status-list="['active']"
+      :title="$t('myCourses')"
+      :link="{ name: 'mycourses' }"
+    ></CourseList>
     <AppFooter></AppFooter>
   </div>
 </template>
@@ -85,6 +89,7 @@ watch(
   margin-bottom: 20px;
 }
 .balls {
+  cursor: pointer;
   padding: 12px 15px;
   background-color: #564bad;
   border-radius: 10px;
