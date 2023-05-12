@@ -57,7 +57,7 @@ watch(course, () => {
 })
 
 const leftAttempts = computed(() => {
-  if (!course.value) return 0
+  if (!course.value || !course.value.education_course) return 0
   return course.value.education_course.testing_attempts_left
 })
 
@@ -107,7 +107,7 @@ function handleLessonFinish() {
         :course-id="route.params.id"
         :attempts="leftAttempts"
         :finished-lesson="finishedLesson"
-        :is-completed="course.education_course.status==='completed'"
+        :is-completed="course.education_course && course.education_course.status==='completed'"
       ></LessonList>
     </div>
     <AppFooter></AppFooter>

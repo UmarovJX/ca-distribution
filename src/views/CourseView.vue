@@ -20,7 +20,7 @@ const course_duration = computed(() => {
 })
 
 const leftAttempts = computed(() => {
-  if (!course.value) return 0
+  if (!course.value || !course.value.education_course) return 0
   return course.value.education_course.testing_attempts_left
 })
 </script>
@@ -58,7 +58,7 @@ const leftAttempts = computed(() => {
       <LessonList
         :course-id="route.params.id"
         :attempts="leftAttempts"
-        :is-completed="course.education_course.status === 'completed'"
+        :is-completed="course.education_course && course.education_course.status === 'completed'"
       ></LessonList>
     </div>
     <AppFooter></AppFooter>
