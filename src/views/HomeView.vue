@@ -21,7 +21,7 @@ const { t } = useI18n({
 authService.getUser()
 const inp = ref('')
 const goWallet = () => {
-  router.push({ name: 'wallethome' })
+  router.push({ name: 'wallet' })
 }
 const searchString = ref('')
 watch(

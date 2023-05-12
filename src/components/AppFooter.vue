@@ -1,15 +1,15 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
-import { useScanner } from '../composables/qRCodeScanner'
+// import { useScanner } from '../composables/qRCodeScanner'
 import { computed } from 'vue'
-import { tg } from '../main'
+// import { tg } from '../main'
 const router = useRouter()
 const route = useRoute()
 function goTo(name) {
   router.push({ name })
 }
 
-const { isProcessingCode, processCode, codeResult } = useScanner()
+// const { isProcessingCode, processCode, codeResult } = useScanner()
 
 const isCoursePath = computed(() => {
   if (route.path === '/') return true
@@ -22,26 +22,26 @@ const isRatingPath = computed(() => {
   return false
 })
 
-const qrCodehandler = (data) => {
-  if (!isProcessingCode.value) {
-    isProcessingCode.value = true
-    processCode(data)
-      .then((data) => {
-        codeResult.value = { myRes: 'success', ...data }
-      })
-      .catch((data) => {
-        codeResult.value = { myRes: 'error', ...data }
-      })
-      .finally(() => {
-        isProcessingCode.value = false
-        tg.closeScanQrPopup()
-        tg.showAlert(JSON.stringify(codeResult.value.myRes))
-      })
-  }
-}
-const openScanner = () => {
-  tg.showScanQrPopup({}, qrCodehandler)
-}
+// const qrCodehandler = (data) => {
+//   if (!isProcessingCode.value) {
+//     isProcessingCode.value = true
+//     processCode(data)
+//       .then((data) => {
+//         codeResult.value = { myRes: 'success', ...data }
+//       })
+//       .catch((data) => {
+//         codeResult.value = { myRes: 'error', ...data }
+//       })
+//       .finally(() => {
+//         isProcessingCode.value = false
+//         tg.closeScanQrPopup()
+//         tg.showAlert(JSON.stringify(codeResult.value.myRes))
+//       })
+//   }
+// }
+// const openScanner = () => {
+//   tg.showScanQrPopup({}, qrCodehandler)
+// }
 </script>
 
 <template>
@@ -68,7 +68,7 @@ const openScanner = () => {
       <p>{{ $t('study') }}</p>
     </div>
 
-    <div @click="openScanner">
+    <!-- <div @click="openScanner">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -103,7 +103,7 @@ const openScanner = () => {
         <path d="M2 12H22" stroke="#7061E1" stroke-width="1.5" stroke-linecap="round" />
       </svg>
       <p>{{ $t('scanner') }}</p>
-    </div>
+    </div> -->
     <div @click="goTo('wallethome')">
       <svg
         :class="isRatingPath ? 'active' : ''"

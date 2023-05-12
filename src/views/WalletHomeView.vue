@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 import authService from '../services/authService'
 
 import walletImg from '../assets/images/wallet.png'
-import walletHistoryImg from '../assets/images/wallethistory.png'
+// import walletHistoryImg from '../assets/images/wallethistory.png'
 const router = useRouter()
 const { t } = useI18n({
   inheritLocale: true,
@@ -23,7 +23,7 @@ function clearSystem() {
 }
 
 const goToWallet = () => router.push({ name: 'wallet' })
-const goToWalletHistory = () => router.push({ name: 'wallethistory' })
+// const goToWalletHistory = () => router.push({ name: 'wallethistory' })
 </script>
 
 <template>
@@ -60,13 +60,13 @@ const goToWalletHistory = () => router.push({ name: 'wallethistory' })
         <h2 class="section-header">{{ t('wallet.wallet') }}</h2>
         <div class="wallet_img mt-20" :style="{ backgroundImage: `url(${walletImg})` }"></div>
       </div>
-      <div class="container mt-40" @click="goToWalletHistory">
+      <!-- <div class="container mt-40" @click="goToWalletHistory">
         <h2 class="section-header">{{ t('wallet.history') }}</h2>
         <div
           class="wallet_img mt-20"
           :style="{ backgroundImage: `url(${walletHistoryImg})` }"
         ></div>
-      </div>
+      </div> -->
     </main>
     <AppFooter></AppFooter>
   </div>
