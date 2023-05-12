@@ -13,7 +13,7 @@ function completeLesson(lesson_id) {
 function search(options = { page: 1 }) {
   const params = { 'filter[name]': options.text }
   params.page = options.page
-  params['page-size'] = 1
+  params['page-size'] = 5
 
   return axios.get(courseURL, { params }).then((response) => response.data)
 }
@@ -24,13 +24,13 @@ function getCourses(options = { statusList: [], page: 1 }) {
     params[`filter[education_course.status][${{ i }}]`] = status
   })
   params.page = options.page
-  params['page-size'] = 1
+  params['page-size'] = 5
   return axios.get(courseURL, { params }).then((response) => response.data)
 }
 
 function getCourseLessons(courseId, page) {
   return axios
-    .get(lessonsURL, { params: { 'filter[course_id]': courseId, page, 'page-size': 4 } })
+    .get(lessonsURL, { params: { 'filter[course_id]': courseId, page, 'page-size': 5 } })
     .then((response) => response.data)
 }
 function getCourse(id) {
