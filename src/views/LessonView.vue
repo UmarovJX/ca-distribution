@@ -25,12 +25,12 @@ getCourse(route.params.id)
 getLesson(route.params.lessonid)
 
 const duration = ref(0)
-const lessonDuration = computed(() => {
-  if (!duration.value) return ''
-  const hours = Math.floor(duration.value / 3600)
-  const minutes = Math.floor(duration.value / 60) - hours * 60
-  return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
-})
+// const lessonDuration = computed(() => {
+//   if (!duration.value) return ''
+//   const hours = Math.floor(duration.value / 3600)
+//   const minutes = Math.floor(duration.value / 60) - hours * 60
+//   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
+// })
 const videoId = ref('')
 function setVideoId() {
   const i = lesson.value.video.indexOf('?v=')
@@ -81,7 +81,7 @@ function handleLessonFinish() {
     <div class="container child_mt_20 flex-column mh-list" v-if="course && lesson">
       <h2 class="typo700_14 course-title-small">{{ course.name[settings.lang] }}</h2>
       <h1 class="typo700_24">{{ lesson.name[settings.lang] }}</h1>
-      <div class="hint_text">
+      <!-- <div class="hint_text">
         <svg
           width="24"
           height="24"
@@ -101,7 +101,7 @@ function handleLessonFinish() {
           />
         </svg>
         <span class="typo600_12">{{ lessonDuration }}</span>
-      </div>
+      </div> -->
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
       <LessonList
         :course-id="route.params.id"
