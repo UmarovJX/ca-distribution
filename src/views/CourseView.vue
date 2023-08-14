@@ -12,12 +12,12 @@ const route = useRoute()
 const { course, getCourse } = useCourses()
 getCourse(route.params.id)
 
-const course_duration = computed(() => {
-  const hours = Math.floor(course.value.duration_in_minutes / 60)
-  const minutes = course.value.duration_in_minutes % 60
+// const course_duration = computed(() => {
+//   const hours = Math.floor(course.value.duration_in_minutes / 60)
+//   const minutes = course.value.duration_in_minutes % 60
 
-  return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
-})
+//   return `${hours > 0 ? hours + ' ' + 'h. ' : ''}${minutes} ` + 'min'
+// })
 
 const leftAttempts = computed(() => {
   if (!course.value || !course.value.education_course) return 0
@@ -33,7 +33,7 @@ const leftAttempts = computed(() => {
         class="course_banner"
       />
       <h1 class="typo700_24">{{ course.name[settings.lang] }}</h1>
-      <div class="hint_text">
+      <!-- <div class="hint_text">
         <svg
           width="24"
           height="24"
@@ -53,7 +53,7 @@ const leftAttempts = computed(() => {
           />
         </svg>
         <span class="typo600_12">{{ course_duration }}</span>
-      </div>
+      </div> -->
       <div class="typo400_14 secondary">{{ course.description[settings.lang] }}</div>
       <LessonList
         :course-id="route.params.id"

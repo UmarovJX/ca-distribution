@@ -1,6 +1,6 @@
 <script setup>
 import ProgressBar from '../components/ProgressBar.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useSettingsStore } from '../stores/settings'
 import { useProgressStore } from '../stores/progress'
 import { computed } from 'vue'
@@ -8,6 +8,7 @@ import { computed } from 'vue'
 const settings = useSettingsStore()
 const { progress, deleteProgress } = useProgressStore()
 const router = useRouter()
+const route = useRoute()
 const props = defineProps({
   isAvailable: {
     type: Boolean
@@ -17,6 +18,11 @@ const props = defineProps({
     required: true
   },
   lesson: { type: Object }
+})
+const cl = computed(()=>{
+  console.log(route.params.lessonid+props.lesson.id)
+  if (route.params.lessonid == props.lesson.id ) return 'active_panel'
+  return ''
 })
 const indexString = computed(() => (props.index < 10 ? '0' : '') + props.index)
 if (!props.lesson.is_completed && progress[props.lesson.id] === 100) deleteProgress(props.lesson.id)
@@ -40,15 +46,14 @@ function handleClick() {
 </script>
 
 <template>
-  <div class="panel" @click="handleClick">
+  <div class="panel" :class="cl" @click="handleClick">
     <div class="typo400_24 mr-20 opacity3">{{ indexString }}</div>
     <div class="lesson_details">
-      <div class="typo700_14 mb-7" :class="{ opacity3: !isAvailable }">
+      <div class="typo700_14" :class="{ opacity3: !isAvailable }">
         {{ lesson.name[settings.lang] }}
       </div>
       <div class="flex" v-if="isAvailable">
-        <!-- duration icon -->
-        <svg
+        <!-- <svg
           width="24"
           height="24"
           viewBox="0 0 24 24"
@@ -65,9 +70,8 @@ function handleClick() {
             d="M12 7.25C12.4142 7.25 12.75 7.58579 12.75 8V11.6893L15.0303 13.9697C15.3232 14.2626 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2626 15.3232 13.9697 15.0303L11.4697 12.5303C11.329 12.3897 11.25 12.1989 11.25 12V8C11.25 7.58579 11.5858 7.25 12 7.25Z"
             fill="white"
           />
-        </svg>
-        <span class="typo600_12 mr-12 hint_text"> {{ $t('duration', { duration: 20 }) }}</span>
-        <!-- is completed icon -->
+        </svg> -->
+        <!-- <span class="typo600_12 mr-12 hint_text"> {{ $t('duration', { duration: 20 }) }}</span> -->
         <svg
           v-if="lesson.is_completed === true"
           width="24"

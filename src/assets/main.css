@@ -109,10 +109,16 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
 }
+.active_panel {
+  border: 1px solid var(--primary-color);
+}
 
 @media (prefers-color-scheme: dark) {
   .panel {
     border: 1px solid var(--color-outline);
+  }
+  .active_panel {
+    border: 1px solid var(--primary-color);
   }
   .panel:hover {
     border: 1px solid var(--primary-color);
@@ -120,6 +126,9 @@ button:disabled {
 }
 .dark .panel {
   border: 1px solid var(--color-outline);
+}
+.dark .active_panel {
+  border: 1px solid var(--primary-color);
 }
 .dark .panel:hover {
   border: 1px solid var(--primary-color);
