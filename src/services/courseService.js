@@ -30,7 +30,7 @@ function getCourses(options = { statusList: [], page: 1 }) {
 
 function getCourseLessons(courseId, page) {
   return axios
-    .get(lessonsURL, { params: { 'filter[course_id]': courseId, page, 'page-size': 5 } })
+    .get(lessonsURL, { params: { 'filter[course_id]': courseId, page, 'page-size': 100 } })
     .then((response) => response.data)
 }
 function getCourse(id) {
