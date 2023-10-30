@@ -51,7 +51,7 @@ export function useCourseList({ statusList = [] } = {}) {
     const params = { statusList, page: page.value }
     courses.getCourses(params).then((data) => {
       isLoading.value = false
-      list.value.push(...data.data.sort((a,b)=>a.priority-b.priority)
+      list.value.push(...data.data)
       page.value++
       hasNextPage.value = !!data.links.next
     })
@@ -68,7 +68,7 @@ export function useLessonList(courseId) {
     isLoading.value = true
     courses.getCourseLessons(courseId, page.value).then((data) => {
       isLoading.value = false
-      list.value.push(...data.data)
+      list.value.push(...data.data.sort((a,b)=>a.priority-b.priority))
       page.value++
       hasNextPage.value = !!data.links.next
     })
